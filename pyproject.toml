@@ -1,0 +1,15 @@
+[project]
+name = "custom_nccl_collectives"
+version = "0.1.0"
+description = "NCCL APIs reconstructed using NCCL internals"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = []
+
+[build-system]
+requires = ["scikit-build-core>=0.10", "pybind11"]
+build-backend = "scikit_build_core.build"
+
+[tool.uv.build-backend]
+module-name = "nccl_api"
+module-root = ""
