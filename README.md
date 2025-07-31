@@ -6,11 +6,7 @@ The code is meant for educational purposes and to be used to demonstrate the mul
 The project follows [2] in structuring the code, and the design of NCCL.
 
 ## Benchmarking:
-* From [5], "Run on 8 GPUs (-g 8), scanning from 8 Bytes to 128 MBytes : 
-```
-$ ./build/all_reduce_perf -b 8 -e 128M -f 2 -g 8
-```
-"
+* We use https://github.com/NVIDIA/nccl-tests/tree/master to test our collectives for correctness. Since the code is primarily to simplify and understand NCCL, and not optimized like NCCL, there is very little expectation of performance matching NCCL.
 
 ## References:
 [1] S. Rennich, “CUDA C/C++ Streams and Concurrency”.
