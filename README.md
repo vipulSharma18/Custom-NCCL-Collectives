@@ -16,10 +16,13 @@ docker login -u dockervipul181999
 docker tag custom_nccl:latest dockervipul181999/custom_nccl:latest
 docker push dockervipul181999/custom_nccl:latest
 ```
+
 Pull and run container:
 ```
 docker pull dockervipul181999/custom_nccl:latest
 docker run --gpus all -it --rm dockervipul181999/custom_nccl:latest
+# for github setup
+gh auth login
 ```
 
 ## References:
