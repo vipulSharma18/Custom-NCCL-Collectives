@@ -8,6 +8,19 @@ The project follows [2] in structuring the code, and the design of NCCL.
 ## Benchmarking:
 * We use https://github.com/NVIDIA/nccl-tests/tree/master to test our collectives for correctness. Since the code is primarily to simplify and understand NCCL, and not optimized like NCCL, there is very little expectation of performance matching NCCL.
 
+## Docker:
+Build and push to docker hub:
+```
+docker build -t custom_nccl .
+docker login -u dockervipul181999
+docker push dockervipul181999/custom_nccl:latest
+```
+Pull and run container:
+```
+docker pull dockervipul181999/custom_nccl:latest
+docker run --gpus all -it --rm dockervipul181999/custom_nccl:latest
+```
+
 ## References:
 [1] S. Rennich, “CUDA C/C++ Streams and Concurrency”.    
 [2] Z. Hu et al., “Demystifying NCCL: An In-depth Analysis of GPU Communication Protocols and Algorithms,” July 07, 2025, arXiv: arXiv:2507.04786. doi: 10.48550/arXiv.2507.04786.    
