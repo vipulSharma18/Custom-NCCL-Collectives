@@ -7,7 +7,7 @@ include ../src/common.mk
 
 .PHONY: all clean
 
-BUILDDIR := $(abspath ../build)
+BUILDDIR ?= $(abspath ../../build)
 NCCLDIR := $(BUILDDIR)
 NVCUFLAGS += -I$(NCCLDIR)/include/ -I../include
 DST_DIR := $(BUILDDIR)/verifiable
