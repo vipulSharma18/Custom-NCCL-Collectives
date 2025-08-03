@@ -7,13 +7,13 @@
 BUILDDIR ?= ../build
 override BUILDDIR := $(abspath $(BUILDDIR))
 
-.PHONY: all clean
+.PHONY: build clean
 
 default: src.build
 
 TARGETS=src
 
-all:   ${TARGETS:%=%.build}
+build:   ${TARGETS:%=%.build}
 clean: ${TARGETS:%=%.clean}
 
 %.build:
