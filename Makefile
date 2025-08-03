@@ -3,15 +3,14 @@ override BUILDDIR := $(abspath $(BUILDDIR))
 
 .PHONY: all clean
 
-all: nccl_api nccl_tests
-	@echo "Make target 'all' - doing nothing for now"
+TARGETS=nccl_api nccl_tests
 
-nccl_api:
-	cd nccl_api && make
-
-nccl_tests:
-	cd nccl_tests && make
-
+all: ${BUILDDIR} ${TARGETS:%=%.build}
 clean:
-	cd nccl_api && make clean
-	cd nccl_tests && make clean
+	rm -rf ${BUILDDIR}
+
+${BUILDDIR}:
+	mkdir -p ${BUILDDIR}
+
+%.build:
+	${MAKE} -C $* build BUILDDIR=${BUILDDIR}
