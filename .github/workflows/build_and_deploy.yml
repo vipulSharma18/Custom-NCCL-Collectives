@@ -8,8 +8,11 @@ jobs:
   build-and-push-docker-image:
     runs-on: ubuntu-latest
     steps:
-      - name: check disk space
-        run: df . -h
+      - name: Check disk space before build
+        run: |
+          df -h
+          docker system df
+          docker images
       - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
@@ -29,5 +32,13 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: ${{ vars.DOCKERHUB_USERNAME }}/custom_nccl:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          outputs: type=docker,dest=/tmp/result
       - name: Inspect/verify build and push
         run: docker image inspect ${{ vars.DOCKERHUB_USERNAME }}/custom_nccl:latest
+      - name: Cleanup Docker system
+        run: |
+          docker system prune -f
+          docker builder prune -f
+          df -h
