@@ -9,7 +9,24 @@ The project follows [2] in structuring the code, and the design of NCCL.
 * We use https://github.com/NVIDIA/nccl-tests/tree/master to test our collectives for correctness. Since the code is primarily to simplify and understand NCCL, and not optimized like NCCL, there is very little expectation of performance matching NCCL.
 
 ## Docker:
-Build and push to docker hub:
+Git setup if needed:
+```
+(type -p wget >/dev/null || (sudo apt update && sudo apt install wget -y)) \
+	&& sudo mkdir -p -m 755 /etc/apt/keyrings \
+	&& out=$(mktemp) && wget -nv -O$out https://cli.github.com/packages/githubcli-archive-keyring.gpg \
+	&& cat $out | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null \
+	&& sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg \
+	&& sudo mkdir -p -m 755 /etc/apt/sources.list.d \
+	&& echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
+	&& sudo apt update \
+	&& sudo apt install gh -y
+gh auth login
+git config --global user.email "vipuls181999@gmail.com"
+git config --global user.name "Vipul Sharma"
+git clone git@github.com:vipulSharma18/Custom-NCCL-Collectives.git
+```
+
+Build and push to DockerHub:
 ```
 docker build -t custom_nccl .
 docker login -u dockervipul181999
