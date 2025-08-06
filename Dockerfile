@@ -24,11 +24,11 @@ RUN (type -p wget >/dev/null || (apt update && apt install wget -y)) \
     && apt update \
     && apt install gh -y
 
-# install nccl
-RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb \
+# install nccl if not already installed
+RUN (dpkg -l | grep -q libnccl2) || (wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb \
     && dpkg -i cuda-keyring_1.1-1_all.deb \
     && apt-get update \
-    && apt install libnccl2 libnccl-dev -y
+    && apt install libnccl2 libnccl-dev -y)
 
 WORKDIR /app
 
