@@ -8,6 +8,16 @@ The project follows [2] in structuring the code, and the design of NCCL.
 ## Benchmarking:
 * We use https://github.com/NVIDIA/nccl-tests/tree/master to test our collectives for correctness. Since the code is primarily to simplify and understand NCCL, and not optimized like NCCL, there is very little expectation of performance matching NCCL.
 
+## Build local NVIDIA-NCCL:
+Building the main branch of NVIDIA's NCCL: https://github.com/NVIDIA/nccl/tree/master
+```
+wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb
+sudo dpkg -i cuda-keyring_1.1-1_all.deb
+sudo apt-get update
+sudo apt install libnccl2 libnccl-dev
+```
+
+
 ## Docker:
 Git setup if needed:
 ```
