@@ -23,6 +23,8 @@ docker pull dockervipul181999/custom_nccl:latest
 docker run --gpus all -dit dockervipul181999/custom_nccl:latest
 # for github setup
 gh auth login
+git config --global user.email "vipuls181999@gmail.com"
+git config --global user.name "Vipul Sharma"
 ```
 
 ## References:
