@@ -34,7 +34,6 @@ jobs:
           tags: ${{ vars.DOCKERHUB_USERNAME }}/custom_nccl:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          outputs: type=docker,dest=/tmp/result
       - name: Inspect/verify build and push
         run: docker image inspect ${{ vars.DOCKERHUB_USERNAME }}/custom_nccl:latest
       - name: Cleanup Docker system
