@@ -1,4 +1,7 @@
 # NCCL From First Principles
+
+[![Docker Build](https://github.com/vipulSharma18/NCCL-From-First-Principles/actions/workflows/build_and_deploy.yml/badge.svg?branch=main)](https://github.com/vipulSharma18/NCCL-From-First-Principles/actions/workflows/build_and_deploy.yml)
+
 Creating NCCL communication collectives and transport layer based on the description in [2]. The development is in phases, first making the communication API layer of NCCL while reusing the transport layer, and then creating the transport layer.
 
 The code is for educational purposes and to demonstrate the multiple layers of abstraction involved in PyTorch's distributed training.
