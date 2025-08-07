@@ -1,7 +1,7 @@
 [project]
-name = "custom_nccl_collectives"
+name = "nccl_from_first_principles"
 version = "0.1.0"
-description = "NCCL APIs reconstructed using NCCL internals"
+description = "NCCL communication APIs and transport layer created from first principles."
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = []
