@@ -35,12 +35,9 @@ jobs:
         with:
           platforms: linux/amd64
           push: true
-          load: true
           tags: ${{ vars.DOCKERHUB_USERNAME }}/custom_nccl:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
-      - name: Inspect/verify build and push
-        run: docker image inspect ${{ vars.DOCKERHUB_USERNAME }}/custom_nccl:latest
       - name: Cleanup Docker system
         run: |
           docker system prune -f
