@@ -46,8 +46,8 @@ COPY Makefile .
 COPY nccl_api ./nccl_api
 COPY nccl_tests ./nccl_tests
 
-# build with all cores and show ccache stats.
-RUN make -j$(nproc) && ccache -s
+# build and show ccache stats.
+RUN make && ccache -s
 
 # Copy rest of the repo which might get changed frequently, like readme, separately for docker cache optimization.
 COPY . .
