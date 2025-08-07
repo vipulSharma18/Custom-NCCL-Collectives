@@ -1,9 +1,6 @@
 FROM nvidia/cuda:12.9.1-cudnn-devel-ubuntu24.04
 
 ENV DEBIAN_FRONTEND=noninteractive
-ENV CC="ccache gcc"
-ENV CXX="ccache g++"
-ENV NVCC="ccache nvcc"
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
@@ -11,16 +8,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     wget \
     vim \
     git \
-    ccache \
     python3 \
     python3-pip \
     openssh-client \
     && rm -rf /var/lib/apt/lists/*
-
-# Set up symlinks so ccache wraps compilers
-RUN ln -s /usr/bin/ccache /usr/local/bin/gcc && \
-    ln -s /usr/bin/ccache /usr/local/bin/g++ && \
-    ln -s /usr/bin/ccache /usr/local/bin/nvcc
 
 # install gh/github cli for git creds management
 RUN (type -p wget >/dev/null || (apt update && apt install wget -y)) \
@@ -46,8 +37,7 @@ COPY Makefile .
 COPY nccl_api ./nccl_api
 COPY nccl_tests ./nccl_tests
 
-# build and show ccache stats.
-RUN make && ccache -s
+RUN make -j$(nproc)
 
 # Copy rest of the repo which might get changed frequently, like readme, separately for docker cache optimization.
 COPY . .
