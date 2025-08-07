@@ -1,7 +1,7 @@
-# Custom-NCCL-Collectives
-Creating NCCL collectives from communication primitives (send and recv). This will create most of the API layer of NCCL while reusing the Transport layer. 
+# NCCL From First Principles
+Creating NCCL communication collectives and transport layer based on the description in [2]. The development is in phases, first making the communication API layer of NCCL while reusing the transport layer, and then creating the transport layer.
 
-The code is meant for educational purposes and to be used to demonstrate the multiple layers of abstraction involved in PyTorch's distributed training.
+The code is for educational purposes and to demonstrate the multiple layers of abstraction involved in PyTorch's distributed training.
 
 The project follows [2] in structuring the code, and the design of NCCL.
 
