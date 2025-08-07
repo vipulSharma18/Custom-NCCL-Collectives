@@ -23,6 +23,8 @@ int main(){
     ncclGroupEnd();
 
     printf("Running sendrecv.");
+    char hostname[1024];                            \
+    getHostName(hostname, 1024);
     sendRecv(Id);
 
     return 0;
