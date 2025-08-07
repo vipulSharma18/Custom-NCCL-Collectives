@@ -1,6 +1,9 @@
 BUILDDIR ?= ../../build
 override BUILDDIR := $(abspath $(BUILDDIR))
 
+$(info Received CXXFLAGS: $(CXXFLAGS))
+$(info Received NVCCFLAGS: $(NVCCFLAGS))
+
 .PHONY: build clean
 
 TARGETS=algorithms operations
