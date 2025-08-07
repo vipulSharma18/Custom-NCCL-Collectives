@@ -8,8 +8,15 @@ jobs:
   build-and-push-docker-image:
     runs-on: ubuntu-latest
     steps:
-      - name: Check disk space before build
+      - name: Delete huge unnecessary tools folder to make space on gh runner
         run: |
+          df -h
+          echo "cleaning"
+          rm -rf /opt/hostedtoolcache
+          rm -rf /usr/share/dotnet
+          echo "AGENT_TOOLSDIRECTORY: $AGENT_TOOLSDIRECTORY"
+          rm -rf "$AGENT_TOOLSDIRECTORY"
+          echo "cleaning done"
           df -h
           docker system df
           docker images
