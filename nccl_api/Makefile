@@ -1,3 +1,5 @@
+.EXPORT_ALL_VARIABLES:
+
 BUILDDIR ?= ../build
 override BUILDDIR := $(abspath $(BUILDDIR))
 
@@ -12,7 +14,7 @@ CUDA_INC ?= $(CUDA_HOME)/include
 NVCC ?= $(CUDA_HOME)/bin/nvcc
 CUDARTLIB ?= cudart
 
-export MAKEFLAGS
+export
 
 .PHONY: build clean
 
