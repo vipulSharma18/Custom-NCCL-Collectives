@@ -1,14 +1,22 @@
 BUILDDIR ?= ../../build
 override BUILDDIR := $(abspath $(BUILDDIR))
 
-$(info Received CXXFLAGS: $(CXXFLAGS))
-$(info Received NVCCFLAGS: $(NVCCFLAGS))
-
 .PHONY: build clean
 
+# CUDA files
 CU_FILES := $(wildcard *.cu)
-build: $(CU_FILES)
-	@echo "Building p2p_communication (does nothing for now). Files: $^"
+TARGETS := $(CU_FILES:.cu=)
+
+# Build targets
+build: $(TARGETS)
+
+# Compile each .cu file to executable
+$(TARGETS): %: %.cu
+	@echo "Building $@ from $<"
+	$(NVCC) $(NVCCFLAGS) $(CXXFLAGS) -o $@ $<
+	@echo "Built $@ successfully"
 
 clean:
-	@echo "Cleaning p2p_communication (does nothing for now)."
+	@echo "Cleaning p2p_communication..."
+	rm -f $(TARGETS)
+	@echo "Cleaned $(TARGETS)"

@@ -2,13 +2,12 @@
 #include <stdio.h>
 #include "common.h"
 
-
 int sendRecv(ncclUniqueId Id){
     ncclGroupStart();
-
+    // TODO: Add actual send/recv operations here
     ncclGroupEnd();
+    return 0;
 }
-
 
 int main(){
     // init communicator
@@ -22,9 +21,10 @@ int main(){
     }
     ncclGroupEnd();
 
-    printf("Running sendrecv.");
-    char hostname[1024];                            \
+    printf("Running sendrecv.\n");
+    char hostname[1024];
     getHostName(hostname, 1024);
+    printf("Hostname: %s\n", hostname);
     sendRecv(Id);
 
     return 0;
