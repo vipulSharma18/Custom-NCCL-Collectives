@@ -92,7 +92,7 @@ git config --global user.name "Vipul Sharma"
 	- [x] Docker containerization to deploy on VastAI.
 	- [x] GitHub workflow with Docker build and push to DockerHub setup to avoid slow local builds.
 - [ ] Point2Point Communication APIs (NCCL grouped calls)
-	- [ ] SendRecv
+	- [ ] recvSend
 	- [ ] All-to-All
  	- [ ] All-to-One (Gather)
  	- [ ] Neighbor Exchange
@@ -100,7 +100,6 @@ git config --global user.name "Vipul Sharma"
  	- [ ] RecvCopySend
  	- [ ] RecvReduceCopySend
  	- [ ] RecvReduceSend
- 	- [ ] SendRecv
 - [ ] Collective Communication APIs (both Ring and Tree implementations using P2P APIs)
 	- [ ] Ring
  		- [ ] AllGather

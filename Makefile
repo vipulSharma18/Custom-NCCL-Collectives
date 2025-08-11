@@ -1,3 +1,6 @@
+.EXPORT_ALL_VARIABLES:
+MPI_HOME ?=  /usr/lib/x86_64-linux-gnu/openmpi/
+
 BUILDDIR ?= build
 override BUILDDIR := $(abspath $(BUILDDIR))
 

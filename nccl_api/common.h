@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <cstdint>
 #include <algorithm>
+#include <string>
 #ifdef MPI_SUPPORT
 #include "mpi.h"
 #endif
@@ -59,6 +60,17 @@ extern "C" char const* ncclGetLastError(ncclComm_t comm);
         return testNcclError;                           \
     }                                                 \
 } while(0)
+#endif
+
+#ifdef MPI_SUPPORT
+#define MPICHECK(cmd) do {                          \
+    int e = cmd;                                      \
+    if( e != MPI_SUCCESS ) {                          \
+      printf("Failed: MPI error %s:%d '%d'\n",        \
+          __FILE__,__LINE__, e);   \
+      exit(EXIT_FAILURE);                             \
+    }                                                 \
+  } while(0)  
 #endif
 
 static void getHostName(char* hostname, int maxlen) {
@@ -114,5 +126,17 @@ static uint64_t getHostHash(const char* hostname) {
 extern int is_main_proc;
 extern thread_local int is_main_thread;
 #define PRINT if (is_main_thread) printf
+
+char* getCmdOption(char** begin, char** end, const std::string& option){
+    char** itr = std::find(begin, end, option);
+    if(itr != end && ++itr != end){
+        return *itr;
+    }
+    return 0;
+}
+
+bool cmdOptionExists(char** begin, char** end, const std::string& option){
+    return std::find(begin, end, option) != end;
+}
 
 #endif

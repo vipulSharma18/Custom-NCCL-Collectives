@@ -18,6 +18,10 @@ NCCLLIB ?= nccl
 
 NVLDFLAGS  := -L${CUDA_LIB} -l${CUDARTLIB} -L${NCCL_HOME} -l${NCCLLIB}
 
+# MPI headers and libs
+NVCCFLAGS += -DMPI_SUPPORT -I$(MPI_HOME)/include
+NVLDFLAGS += -L$(MPI_HOME)/lib -lmpi
+
 .PHONY: build clean
 
 TARGETS=point_to_point_communication collective_communication
