@@ -14,13 +14,13 @@ int recvSend(
     size_t size,
     ncclDataType_t datatype,
     int peer,
-    ncclComm_t* comm,
-    cudaStream_t* stream
+    ncclComm_t comm,
+    cudaStream_t stream
     ){
     // p2p calls within a group are independent, so the send and recv is done concurrently.
     ncclGroupStart();
-    NCCLCHECK(ncclRecv(recvbuff, size, datatype, peer, *comm, *stream));
-    NCCLCHECK(ncclSend(sendbuff, size, datatype, peer, *comm, *stream));
+    NCCLCHECK(ncclRecv(recvbuff, size, datatype, peer, comm, stream));
+    NCCLCHECK(ncclSend(sendbuff, size, datatype, peer, comm, stream));
     ncclGroupEnd();
     return 0;
 }
@@ -62,9 +62,9 @@ int main(int argc, char* argv[]){
 
     printf("Running sendrecv.\n");
     if(myRank==0){
-        recvSend((void*)sendbuff, (void*)recvbuff, 1, ncclFloat32, 1, &comm, &stream);
+        recvSend((void*)sendbuff, (void*)recvbuff, 1, ncclFloat32, 1, comm, stream);
     } else {
-        recvSend((void*)sendbuff, (void*)recvbuff, 1, ncclFloat32, 0, &comm, &stream);
+        recvSend((void*)sendbuff, (void*)recvbuff, 1, ncclFloat32, 0, comm, stream);
     }
 
     //completing NCCL operation by synchronizing on the CUDA stream

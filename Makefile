@@ -6,7 +6,7 @@ override BUILDDIR := $(abspath $(BUILDDIR))
 
 .PHONY: all clean
 
-TARGETS=nccl_api nccl_tests
+TARGETS=nccl_api # nccl_tests
 
 all: ${BUILDDIR} ${TARGETS:%=%.build}
 clean:
