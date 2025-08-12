@@ -37,7 +37,7 @@ WORKDIR /app
 # only copy essentials for docker cache optimization.
 COPY Makefile .
 COPY src ./src
-COPY test ./test
+COPY tests ./tests
 
 RUN make -j$(nproc)
 
