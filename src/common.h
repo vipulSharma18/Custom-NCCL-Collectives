@@ -7,6 +7,7 @@
 #define __COMMON_H__
 
 #include "nccl.h"
+#include "custom_nccl.h"
 #include <cstring>
 #include <stdio.h>
 #include <cstdint>
@@ -72,6 +73,20 @@ extern "C" char const* ncclGetLastError(ncclComm_t comm);
     }                                                 \
   } while(0)  
 #endif
+
+#define CUSTOMNCCLCHECK(cmd) do {                         \
+    custom_ncclResult_t res = cmd;                           \
+    if (res != custom_ncclSuccess) {                         \
+        char hostname[1024];                            \
+        getHostName(hostname, 1024);                    \
+        printf("%s: Test NCCL failure %s:%d "           \
+            "'%s / %s'\n",                           \
+            hostname,__FILE__,__LINE__,              \
+            ncclGetErrorString(res),                 \
+            ncclGetLastError(NULL));                 \
+        return 1;                           \
+    }                                                 \
+} while(0)
 
 static void getHostName(char* hostname, int maxlen) {
     gethostname(hostname, maxlen);

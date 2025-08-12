@@ -1,3 +1,4 @@
+#include "custom_nccl.h"
 #include "nccl.h"
 #include <exception>
 #include <stdio.h>
@@ -8,8 +9,8 @@
 #include "mpi.h"
 #endif
 
-int recvSend(
-    void* sendbuff,
+ncclResult_t custom_recvSend(
+    const void* sendbuff,
     void* recvbuff,
     size_t size,
     ncclDataType_t datatype,
@@ -19,10 +20,10 @@ int recvSend(
     ){
     // p2p calls within a group are independent, so the send and recv is done concurrently.
     ncclGroupStart();
-    NCCLCHECK(ncclRecv(recvbuff, size, datatype, peer, comm, stream));
-    NCCLCHECK(ncclSend(sendbuff, size, datatype, peer, comm, stream));
-    ncclGroupEnd();
-    return 0;
+    ncclRecv(recvbuff, size, datatype, peer, comm, stream);
+    ncclSend(sendbuff, size, datatype, peer, comm, stream);
+    ncclResult_t ret = ncclGroupEnd();
+    return ret;
 }
 
 int main(int argc, char* argv[]){
@@ -64,9 +65,13 @@ int main(int argc, char* argv[]){
 
     printf("Running sendrecv.\n");
     if(myRank==0){
-        recvSend((void*)sendbuff, (void*)recvbuff, size, ncclFloat32, 1, comm, stream);
+        NCCLCHECK(
+            custom_recvSend((const void*)sendbuff, (void*)recvbuff, size, ncclFloat32, 1, comm, stream)
+        );
     } else {
-        recvSend((void*)sendbuff, (void*)recvbuff, size, ncclFloat32, 0, comm, stream);
+        NCCLCHECK(
+            custom_recvSend((const void*)sendbuff, (void*)recvbuff, size, ncclFloat32, 0, comm, stream)
+        );
     }
 
     //completing NCCL operation by synchronizing on the CUDA stream
@@ -75,7 +80,7 @@ int main(int argc, char* argv[]){
     //free device buffers
     CUDACHECK(cudaFree(sendbuff));
     CUDACHECK(cudaFree(recvbuff));
-    
+
     // Destroy CUDA stream
     CUDACHECK(cudaStreamDestroy(stream));
     

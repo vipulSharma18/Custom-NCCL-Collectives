@@ -4,7 +4,7 @@
 # See LICENCE.txt for license information
 #
 
-BUILDDIR ?= ../build
+BUILDDIR ?= ../../../build
 override BUILDDIR := $(abspath $(BUILDDIR))
 
 .PHONY: build clean

@@ -1,12 +1,15 @@
+// Code is borrowed and edited from NVIDIA/NCCL repo, whose copyright is below.
 /*************************************************************************
 * Copyright (c) 2015-2021, NVIDIA CORPORATION. All rights reserved.
 *
 * See LICENSE.txt for license information
 ************************************************************************/
 
-#ifndef NCCL_H_
-#define NCCL_H_
+#ifndef CUSTOM_NCCL_H_
+#define CUSTOM_NCCL_H_
 
+#include <cstddef>
+#include "nccl.h"  // for bootstrapping custom nccl, will remove as a dependency slowly.
 #include <cuda_runtime.h>
 #include <cuda_fp16.h>
 #if CUDART_VERSION >= 11000
@@ -15,138 +18,62 @@
 #if CUDART_VERSION >= 11080
 #include <cuda_fp8.h>
 #endif
+#if CUDART_VERSION >= 12080
+#include <cuda_fp6.h>
+#endif
+#if CUDART_VERSION >= 12080
+#include <cuda_fp4.h>
+#endif
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-/*
-* Broadcast
-*
-* Copies count values from root to all other devices.
-* root is the rank (not the CUDA device) where data resides before the
-* operation is started.
-*
-* In-place operation will happen if sendbuff == recvbuff.
-*/
-ncclResult_t  ncclBroadcast(const void* sendbuff, void* recvbuff, size_t count, ncclDataType_t datatype, int root,
-    ncclComm_t comm, cudaStream_t stream);
+/* Error type */
+typedef enum { custom_ncclSuccess                 =  0,
+    custom_ncclUnhandledCudaError      =  1,
+    custom_ncclSystemError             =  2,
+    custom_ncclInternalError           =  3,
+    custom_ncclInvalidArgument         =  4,
+    custom_ncclInvalidUsage            =  5,
+    custom_ncclRemoteError             =  6,
+    custom_ncclInProgress              =  7,
+    custom_ncclNumResults              =  8 } custom_ncclResult_t;
 
-/*
-* All-Reduce
-*
-* Reduces data arrays of length count in sendbuff using op operation, and
-* leaves identical copies of result on each recvbuff.
-*
-* In-place operation will happen if sendbuff == recvbuff.
-*/
-ncclResult_t  ncclAllReduce(const void* sendbuff, void* recvbuff, size_t count,
-    ncclDataType_t datatype, ncclRedOp_t op, ncclComm_t comm, cudaStream_t stream);
+/* Data types */ //TODO: extend this for fp4
+typedef enum {
+    custom_ncclInt8       = 0, custom_ncclChar       = 0,
+    custom_ncclUint8      = 1,
+    custom_ncclInt32      = 2, custom_ncclInt        = 2,
+    custom_ncclUint32     = 3,
+    custom_ncclInt64      = 4,
+    custom_ncclUint64     = 5,
+    custom_ncclFloat16    = 6, custom_ncclHalf       = 6,
+    custom_ncclFloat32    = 7, custom_ncclFloat      = 7,
+    custom_ncclFloat64    = 8, custom_ncclDouble     = 8,
+    custom_ncclBfloat16   = 9,
+    custom_ncclFloat8e4m3 = 10,
+    custom_ncclFloat8e5m2 = 11,
+    custom_ncclNumTypes   = 12
+} custom_ncclDataType_t;
 
-/*
-* Reduce-Scatter
-*
-* Reduces data in sendbuff using op operation and leaves reduced result
-* scattered over the devices so that recvbuff on rank i will contain the i-th
-* block of the result.
-* Assumes sendcount is equal to nranks*recvcount, which means that sendbuff
-* should have a size of at least nranks*recvcount elements.
-*
-* In-place operations will happen if recvbuff == sendbuff + rank * recvcount.
-*/
-ncclResult_t  ncclReduceScatter(const void* sendbuff, void* recvbuff,
-    size_t recvcount, ncclDataType_t datatype, ncclRedOp_t op, ncclComm_t comm,
-    cudaStream_t stream);
+// p2p
+ncclResult_t custom_RecvSend(const void* sendbuff, void* recvbuff, size_t count,
+    ncclDataType_t datatype, int peer, ncclComm_t comm, cudaStream_t stream);
+ncclResult_t custom_AllToAll();
+ncclResult_t custom_NeighborExchange();
+ncclResult_t custom_Gather();
+ncclResult_t custom_Satter();
+ncclResult_t custom_RecvCopySend();
+ncclResult_t custom_RecvReduceCopySend();
+ncclResult_t custom_RecvReduceSend();
 
-/*
-* All-Gather
-*
-* Each device gathers sendcount values from other GPUs into recvbuff,
-* receiving data from rank i at offset i*sendcount.
-* Assumes recvcount is equal to nranks*sendcount, which means that recvbuff
-* should have a size of at least nranks*sendcount elements.
-*
-* In-place operations will happen if sendbuff == recvbuff + rank * sendcount.
-*/
-ncclResult_t  ncclAllGather(const void* sendbuff, void* recvbuff, size_t sendcount,
-    ncclDataType_t datatype, ncclComm_t comm, cudaStream_t stream);
-
-/*
-* Send
-*
-* Send data from sendbuff to rank peer.
-*
-* Rank peer needs to call ncclRecv with the same datatype and the same count from this
-* rank.
-*
-* This operation is blocking for the GPU. If multiple ncclSend and ncclRecv operations
-* need to progress concurrently to complete, they must be fused within a ncclGroupStart/
-* ncclGroupEnd section.
-*/
-ncclResult_t  ncclSend(const void* sendbuff, size_t count, ncclDataType_t datatype, int peer,
-    ncclComm_t comm, cudaStream_t stream);
-
-/*
-* Receive
-*
-* Receive data from rank peer into recvbuff.
-*
-* Rank peer needs to call ncclSend with the same datatype and the same count to this
-* rank.
-*
-* This operation is blocking for the GPU. If multiple ncclSend and ncclRecv operations
-* need to progress concurrently to complete, they must be fused within a ncclGroupStart/
-* ncclGroupEnd section.
-*/
-ncclResult_t pncclRecv(void* recvbuff, size_t count, ncclDataType_t datatype, int peer,
-    ncclComm_t comm, cudaStream_t stream);
-
-/*
-* Group semantics
-*
-* When managing multiple GPUs from a single thread, and since NCCL collective
-* calls may perform inter-CPU synchronization, we need to "group" calls for
-* different ranks/devices into a single call.
-*
-* Grouping NCCL calls as being part of the same collective operation is done
-* using ncclGroupStart and ncclGroupEnd. ncclGroupStart will enqueue all
-* collective calls until the ncclGroupEnd call, which will wait for all calls
-* to be complete. Note that for collective communication, ncclGroupEnd only
-* guarantees that the operations are enqueued on the streams, not that
-* the operation is effectively done.
-*
-* Both collective communication and ncclCommInitRank can be used in conjunction
-* of ncclGroupStart/ncclGroupEnd, but not together.
-*
-* Group semantics also allow to fuse multiple operations on the same device
-* to improve performance (for aggregated collective calls), or to permit
-* concurrent progress of multiple send/receive operations.
-*/
-
-/*
-* Group Start
-*
-* Start a group call. All calls to NCCL until ncclGroupEnd will be fused into
-* a single NCCL operation. Nothing will be started on the CUDA stream until
-* ncclGroupEnd.
-*/
-ncclResult_t  ncclGroupStart();
-
-/*
-* Group End
-*
-* End a group call. Start a fused NCCL operation consisting of all calls since
-* ncclGroupStart. Operations on the CUDA stream depending on the NCCL operations
-* need to be called after ncclGroupEnd.
-*/
-ncclResult_t  ncclGroupEnd();
-
-/*
-* Group Simulate End
-*
-* Simulate a ncclGroupEnd() call and return NCCL's simulation info in a struct.
-*/
-ncclResult_t  ncclGroupSimulateEnd(ncclSimInfo_t* simInfo);
+// collectives
+ncclResult_t custom_Broadcast();
+ncclResult_t custom_AllReduce();
+ncclResult_t custom_ReduceScatter();
+ncclResult_t custom_AllGather();
+ncclResult_t custom_Reduce();
 
 #ifdef __cplusplus
 } // end extern "C"

@@ -14,7 +14,7 @@ DSO ?= 0
 
 .PHONY: build clean
 
-BUILDDIR ?= ../../build
+BUILDDIR ?= ../../../build
 ifneq ($(NCCL_HOME), "")
 NVCUFLAGS += -I$(NCCL_HOME)/include/
 NVLDFLAGS += -L$(NCCL_HOME)/lib

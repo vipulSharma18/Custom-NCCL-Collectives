@@ -3,8 +3,8 @@ override BUILDDIR := $(abspath $(BUILDDIR))
 
 .PHONY: build clean
 
-CU_FILES := $(wildcard *.cu)
-build: $(CU_FILES)
+CC_FILES := $(wildcard *.cc)
+build: $(CC_FILES)
 	@echo "Building collective_communication (does nothing for now). Files" $^
 
 clean:
