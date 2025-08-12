@@ -36,8 +36,8 @@ WORKDIR /app
 
 # only copy essentials for docker cache optimization.
 COPY Makefile .
-COPY nccl_api ./nccl_api
-COPY nccl_tests ./nccl_tests
+COPY src ./src
+COPY test ./test
 
 RUN make -j$(nproc)
 
