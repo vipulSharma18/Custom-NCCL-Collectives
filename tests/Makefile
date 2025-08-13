@@ -1,7 +1,9 @@
 BUILDDIR ?= ../build
 override BUILDDIR := $(abspath $(BUILDDIR))
+TEST_BUILDDIR ?= $(BUILDDIR)/tests
+override TEST_BUILDDIR := $(abspath $(TEST_BUILDDIR))
 
-.EXPORT_ALL_VARIABLES
+.EXPORT_ALL_VARIABLES:
 NVLDFLAGS += -L$(BUILDDIR) -llibcustom_nccl
 LDFLAGS += -L$(BUILDDIR) -llibcustom_nccl
 
@@ -9,8 +11,11 @@ LDFLAGS += -L$(BUILDDIR) -llibcustom_nccl
 
 TARGETS=unit_tests #nccl_perf_tests
 
-build: ${TARGETS:%=%.build}
+build: ${TEST_BUILDDIR} ${TARGETS:%=%.build}
 clean: ${TARGETS:%=%.clean}
+
+${TEST_BUILDDIR}:
+	mkdir -p ${TEST_BUILDDIR}
 
 %.build:
 	${MAKE} -C $* build BUILDDIR=${BUILDDIR}

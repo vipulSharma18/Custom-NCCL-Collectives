@@ -2,7 +2,7 @@ BUILDDIR ?= ../build
 override BUILDDIR := $(abspath $(BUILDDIR))
 
 .EXPORT_ALL_VARIABLES:
-CXXFLAGS += -I$(CURDIR)
+CXXFLAGS += -I$(CURDIR) -fPIC
 NVCCFLAGS += -I$(CURDIR)
 
 TARGETS=point_to_point_communication collective_communication 
