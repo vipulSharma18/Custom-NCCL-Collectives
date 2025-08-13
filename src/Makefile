@@ -11,7 +11,13 @@ COLLECTIVE = $(BUILDDIR)/collective_communication
 
 .PHONY: build clean
 
-build: ${TARGETS:%=%.build} $(EXPORTED_LIB_TARGET)
+build: ${P2P} ${COLLECTIVE} ${TARGETS:%=%.build} $(EXPORTED_LIB_TARGET)
+
+${P2P}:
+	mkdir -p ${P2P}
+
+${COLLECTIVE}:
+	mkdir -p {COLLECTIVE}
 
 %.build:
 	${MAKE} -C $* build BUILDDIR=${BUILDDIR}
