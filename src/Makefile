@@ -17,7 +17,7 @@ ${P2P}:
 	mkdir -p ${P2P}
 
 ${COLLECTIVE}:
-	mkdir -p {COLLECTIVE}
+	mkdir -p ${COLLECTIVE}
 
 %.build:
 	${MAKE} -C $* build BUILDDIR=${BUILDDIR}
