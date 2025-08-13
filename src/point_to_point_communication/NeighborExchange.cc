@@ -13,7 +13,3 @@ ncclResult_t custom_NeighborExchange(){
     ncclResult_t ret = ncclSuccess;
     return ret;
 }
-
-int main(){
-    return 0;
-}

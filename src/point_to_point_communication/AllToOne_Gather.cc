@@ -14,7 +14,3 @@ ncclResult_t custom_Gather(){
     ncclResult_t ret = ncclSuccess;
     return ret;
 }
-
-int main(){
-    return 0;
-}

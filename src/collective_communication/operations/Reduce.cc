@@ -9,6 +9,7 @@
 #include "mpi.h"
 #endif
 
-int main(){
-    return 0;
+ncclResult_t custom_Reduce(){
+    ncclResult_t ret = ncclSuccess;
+    return ret;    
 }
