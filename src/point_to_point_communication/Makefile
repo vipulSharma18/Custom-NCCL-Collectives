@@ -1,5 +1,6 @@
 BUILDDIR ?= ../../build
-override BUILDDIR := $(abspath $(BUILDDIR))
+P2P_BUILDDIR ?= $(BUILDDIR)/point_to_point_communication
+override P2P_BUILDDIR := $(abspath $(P2P_BUILDDIR))
 
 .PHONY: build clean
 
@@ -7,27 +8,25 @@ override BUILDDIR := $(abspath $(BUILDDIR))
 CC_FILES := $(wildcard *.cc)
 CU_FILES := $(wildcard *.cu)
 
-CC_TARGETS := $(CC_FILES:.cc=)
+CC_TARGETS := $(CC_FILES:.cc=.o)
 CU_TARGETS := $(CU_FILES:.cu=)
 
-CUSTOM_SUFFIX := custom_nccl
-
 # Build targets
-build: $(CC_TARGETS:%=${BUILDDIR}/%_${CUSTOM_SUFFIX}) $(CU_TARGETS:%=${BUILDDIR}/%_${CUSTOM_SUFFIX})
+build: $(CC_TARGETS:%.o=${P2P_BUILDDIR}/%.o) $(CU_TARGETS:%=${P2P_BUILDDIR}/%)
 
 # Compile each .cu file to executable
-${BUILDDIR}/%_${CUSTOM_SUFFIX}: %.cu
+${P2P_BUILDDIR}/%: %.cu
 	@echo "Building $@ from $<"
 	$(NVCC) $(NVCCFLAGS) $(CXXFLAGS) -o $@ $< $(NVLDFLAGS)
 	@echo "Built $@ successfully"
 
 # compile only, not generating final executable with linking
-${BUILDDIR}/%_${CUSTOM_SUFFIX}: %.cc
+${P2P_BUILDDIR}/%.o: %.cc
 	@echo "Building $@ from $<"
 	$(CXX) $(CXXFLAGS) -o $@ -c $<
 	@echo "Built $@ successfully"
 
 clean:
 	@echo "Cleaning p2p_communication..."
-	rm -f $(CC_TARGETS:%=${BUILDDIR}/%_${CUSTOM_SUFFIX}) $(CU_TARGETS:%=${BUILDDIR}/%_${CUSTOM_SUFFIX})
-	@echo "Cleaned $(CC_TARGETS:%=${BUILDDIR}/%_${CUSTOM_SUFFIX}) $(CU_TARGETS:%=${BUILDDIR}/%_${CUSTOM_SUFFIX})"
+	rm -f $(P2P_BUILDDIR)
+	@echo "Cleaned $(P2P_BUILDDIR)"

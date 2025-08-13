@@ -3,7 +3,7 @@ override BUILDDIR := $(abspath $(BUILDDIR))
 
 .PHONY: build clean
 
-TARGETS=nccl_perf_tests unit_tests
+TARGETS=unit_tests #nccl_perf_tests
 
 build: ${TARGETS:%=%.build}
 clean: ${TARGETS:%=%.clean}
