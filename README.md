@@ -48,39 +48,17 @@ sudo apt install libnccl2 libnccl-dev
 ```
 
 ## Docker:
-Git setup if needed:
+Git setup:
 ```
-(type -p wget >/dev/null || (sudo apt update && sudo apt install wget -y)) \
-	&& sudo mkdir -p -m 755 /etc/apt/keyrings \
-	&& out=$(mktemp) && wget -nv -O$out https://cli.github.com/packages/githubcli-archive-keyring.gpg \
-	&& cat $out | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null \
-	&& sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg \
-	&& sudo mkdir -p -m 755 /etc/apt/sources.list.d \
-	&& echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
-	&& sudo apt update \
-	&& sudo apt install gh -y
 gh auth login
 git config --global user.email "vipuls181999@gmail.com"
 git config --global user.name "Vipul Sharma"
-git clone git@github.com:vipulSharma18/Custom-NCCL-Collectives.git
-```
-
-Build and push to DockerHub:
-```
-docker build -t custom_nccl .
-docker login -u dockervipul181999
-docker tag custom_nccl:latest dockervipul181999/custom_nccl:latest
-docker push dockervipul181999/custom_nccl:latest
 ```
 
 Pull and run container:
 ```
-docker pull dockervipul181999/custom_nccl:latest
-docker run --gpus all -dit dockervipul181999/custom_nccl:latest
-# for github setup
-gh auth login
-git config --global user.email "vipuls181999@gmail.com"
-git config --global user.name "Vipul Sharma"
+docker pull ghcr.io/vipulsharma18/nccl-from-first-principles:main
+docker run --gpus all -dit vipulsharma18/nccl-from-first-principles:main
 ```
 
 ## Roadmap:
@@ -92,7 +70,7 @@ git config --global user.name "Vipul Sharma"
 	- [x] Docker containerization to deploy on VastAI.
 	- [x] GitHub workflow with Docker build and push to DockerHub setup to avoid slow local builds.
 - [ ] Point2Point Communication APIs (NCCL grouped calls)
-	- [ ] recvSend
+	- [x] recvSend
 	- [ ] All-to-All
  	- [ ] All-to-One (Gather)
  	- [ ] Neighbor Exchange
