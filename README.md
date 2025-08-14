@@ -1,6 +1,6 @@
 # NCCL From First Principles
 
-[![Docker Build](https://github.com/vipulSharma18/NCCL-From-First-Principles/actions/workflows/build_and_deploy.yml/badge.svg?branch=main)](https://github.com/vipulSharma18/NCCL-From-First-Principles/actions/workflows/build_and_deploy.yml)
+[![Docker Build](https://github.com/vipulSharma18/NCCL-From-First-Principles/actions/workflows/build_and_deploy.yml/badge.svg?branch=main)](https://github.com/vipulSharma18/NCCL-From-First-Principles/actions/workflows/build_and_deploy.yml) [![Run with VastAI](https://img.shields.io/badge/Run_on-Vast.ai-purple?logo=google-cloud&logoColor=white)](https://cloud.vast.ai?ref_id=288801&template_id=2e27cd968cd6da34006dba9cc06c897b)
 
 Creating NCCL communication collectives and transport layer based on the description in [2]. The development is in phases, first making the communication API layer of NCCL while reusing the transport layer, and then creating the transport layer.
 
