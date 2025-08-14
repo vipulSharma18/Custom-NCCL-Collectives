@@ -22,7 +22,8 @@ int main(int argc, char* argv[]){
     // main process's creates a shared single nccl communicator ID
     ncclUniqueId id;
     ncclComm_t comm;
-    int *sendbuff, *recvbuff, *userbuff;
+    int *sendbuff, *recvbuff;
+    int host_buffer;
     cudaStream_t stream;
     int size = 1;
 
@@ -45,10 +46,10 @@ int main(int argc, char* argv[]){
     //init NCCL
     NCCLCHECK(ncclCommInitRank(&comm, nRanks, id, myRank));
 
-    userbuff = &myRank;
-    sendbuff = userbuff;
     int peer = (nRanks-myRank)/nRanks;
-    printf("Data in sendbuff of rank %d is %d.\n", myRank, *sendbuff);
+    host_buffer = myRank;
+    CUDACHECK(cudaMemcpy(sendbuff, &host_buffer, sizeof(int), cudaMemcpyHostToDevice));
+    printf("Data in sendbuff of rank %d is %d.\n", myRank, host_buffer);
     printf("Running sendrecv. Rank %d has peer %d.\n", myRank, peer);
 
     NCCLCHECK(
@@ -59,9 +60,9 @@ int main(int argc, char* argv[]){
     CUDACHECK(cudaStreamSynchronize(stream));
 
     printf("CUDA Stream sync-ed.\n");
-    userbuff = recvbuff;
-    printf("Data in recvbuff of rank %d is %d.\n", myRank, *recvbuff); 
-    assert(*recvbuff == peer);
+    CUDACHECK(cudaMemcpy(&host_buffer, recvbuff, sizeof(int), cudaMemcpyDeviceToHost));
+    printf("Data in recvbuff of rank %d is %d.\n", myRank, host_buffer); 
+    assert(host_buffer == peer);
 
     //free device buffers
     CUDACHECK(cudaFree(sendbuff));
