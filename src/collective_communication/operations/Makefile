@@ -27,5 +27,5 @@ ${COLLECTIVE_BUILDDIR}/%.o: %.cc
 
 clean:
 	@echo "Cleaning collective_communication..."
-	rm -f $(CC_TARGETS:%.o=${COLLECTIVE_BUILDDIR}/%.o) $(CU_TARGETS:%=${COLLECTIVE_BUILDDIR}/%)
+	rm -rf $(CC_TARGETS:%.o=${COLLECTIVE_BUILDDIR}/%.o) $(CU_TARGETS:%=${COLLECTIVE_BUILDDIR}/%)
 	@echo "Cleaned $(CC_TARGETS:%.o=${COLLECTIVE_BUILDDIR}/%.o) $(CU_TARGETS:%=${COLLECTIVE_BUILDDIR}/%)"

@@ -28,5 +28,5 @@ ${P2P_BUILDDIR}/%.o: %.cc
 
 clean:
 	@echo "Cleaning p2p_communication..."
-	rm -f $(P2P_BUILDDIR)
+	rm -rf $(P2P_BUILDDIR)
 	@echo "Cleaned $(P2P_BUILDDIR)"

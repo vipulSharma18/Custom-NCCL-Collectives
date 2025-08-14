@@ -28,5 +28,5 @@ ${TEST_BUILDDIR}/%.o: %.cc
 
 clean:
 	@echo "Cleaning tests."
-	rm -f $(TEST_BUILDDIR)
+	rm -rf $(TEST_BUILDDIR)
 	@echo "Cleaned $(TEST_BUILDDIR)"
