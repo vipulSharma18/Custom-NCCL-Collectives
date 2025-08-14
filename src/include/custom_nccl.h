@@ -64,7 +64,8 @@ ncclResult_t custom_AllToAll();
 ncclResult_t custom_NeighborExchange();
 ncclResult_t custom_Gather();
 ncclResult_t custom_Satter();
-ncclResult_t custom_RecvCopySend();
+ncclResult_t custom_RecvCopySend(const void* sendbuff, void* recvbuff, size_t count,
+    ncclDataType_t datatype, int peer, ncclComm_t comm, cudaStream_t stream);
 ncclResult_t custom_RecvReduceCopySend();
 ncclResult_t custom_RecvReduceSend();
 
