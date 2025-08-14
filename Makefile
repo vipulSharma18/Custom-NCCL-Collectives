@@ -15,7 +15,7 @@ NVCC ?= $(CUDA_HOME)/bin/nvcc
 NCCL_HOME ?= /usr/lib/x86_64-linux-gnu
 NCCLLIB ?= nccl
 
-MPI_HOME ?= /usr/lib/x86_64-linux-gnu/openmpi/
+MPI_HOME ?= /usr/lib/x86_64-linux-gnu/openmpi
 
 NVCCFLAGS := -ccbin $(CXX) $(NVCC_GENCODE) -std=c++11 -O3 -g -DMPI_SUPPORT -I$(MPI_HOME)/include -I$(CUSTOM_NCCL_INCLUDE)
 CXXFLAGS := -std=c++11 -O3 -g -I$(CUDA_INC) -DMPI_SUPPORT -I$(MPI_HOME)/include -I$(CUSTOM_NCCL_INCLUDE)

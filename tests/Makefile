@@ -4,8 +4,8 @@ TEST_BUILDDIR ?= $(BUILDDIR)/tests
 override TEST_BUILDDIR := $(abspath $(TEST_BUILDDIR))
 
 .EXPORT_ALL_VARIABLES:
-NVLDFLAGS += -L$(BUILDDIR) -llibcustom_nccl
-LDFLAGS += -L$(BUILDDIR) -llibcustom_nccl
+NVLDFLAGS += -L$(BUILDDIR) -lcustom_nccl
+LDFLAGS += -L$(BUILDDIR) -lcustom_nccl
 
 .PHONY: build clean
 

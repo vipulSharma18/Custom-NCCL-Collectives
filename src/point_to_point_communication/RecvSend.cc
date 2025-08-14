@@ -7,7 +7,7 @@
 #include "mpi.h"
 #endif
 
-ncclResult_t custom_recvSend(
+ncclResult_t custom_RecvSend(
     const void* sendbuff,
     void* recvbuff,
     size_t size,

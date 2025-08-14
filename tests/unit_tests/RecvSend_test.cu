@@ -47,11 +47,11 @@ int main(int argc, char* argv[]){
     printf("Running sendrecv.\n");
     if(myRank==0){
         NCCLCHECK(
-            custom_recvSend((const void*)sendbuff, (void*)recvbuff, size, ncclFloat32, 1, comm, stream)
+            custom_RecvSend((const void*)sendbuff, (void*)recvbuff, size, ncclFloat32, 1, comm, stream)
         );
     } else {
         NCCLCHECK(
-            custom_recvSend((const void*)sendbuff, (void*)recvbuff, size, ncclFloat32, 0, comm, stream)
+            custom_RecvSend((const void*)sendbuff, (void*)recvbuff, size, ncclFloat32, 0, comm, stream)
         );
     }
 
