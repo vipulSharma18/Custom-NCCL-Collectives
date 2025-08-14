@@ -22,7 +22,7 @@ int main(int argc, char* argv[]){
     // main process's creates a shared single nccl communicator ID
     ncclUniqueId id;
     ncclComm_t comm;
-    float *sendbuff, *recvbuff, *userbuff;
+    int *sendbuff, *recvbuff, *userbuff;
     cudaStream_t stream;
     int size = 1;
 
@@ -36,8 +36,8 @@ int main(int argc, char* argv[]){
     CUDACHECK(cudaSetDevice(myRank));
 
     // Allocate device buffers
-    CUDACHECK(cudaMalloc(&sendbuff, size*sizeof(float)));
-    CUDACHECK(cudaMalloc(&recvbuff, size*sizeof(float)));
+    CUDACHECK(cudaMalloc(&sendbuff, size*sizeof(int)));
+    CUDACHECK(cudaMalloc(&recvbuff, size*sizeof(int)));
 
     // Create CUDA stream
     CUDACHECK(cudaStreamCreate(&stream));
@@ -45,17 +45,17 @@ int main(int argc, char* argv[]){
     //init NCCL
     NCCLCHECK(ncclCommInitRank(&comm, nRanks, id, myRank));
 
-    *userbuff = myRank;
-    *sendbuff = *userbuff;
-    printf("Data in sendbuff of rank %d is %f.\n", myRank, *sendbuff); 
+    userbuff = &myRank;
+    sendbuff = userbuff;
+    printf("Data in sendbuff of rank %d is %d.\n", myRank, *sendbuff); 
     printf("Running sendrecv.\n");
     if(myRank==0){
         NCCLCHECK(
-            custom_RecvSend((const void*)sendbuff, (void*)recvbuff, size, ncclFloat32, 1, comm, stream)
+            custom_RecvSend((const void*)sendbuff, (void*)recvbuff, size, ncclInt8, 1, comm, stream)
         );
     } else {
         NCCLCHECK(
-            custom_RecvSend((const void*)sendbuff, (void*)recvbuff, size, ncclFloat32, 0, comm, stream)
+            custom_RecvSend((const void*)sendbuff, (void*)recvbuff, size, ncclInt8, 0, comm, stream)
         );
     }
 
@@ -63,8 +63,8 @@ int main(int argc, char* argv[]){
     CUDACHECK(cudaStreamSynchronize(stream));
 
     printf("CUDA Stream sync-ed.\n");
-    *userbuff = *recvbuff;
-    printf("Data in recvbuff of rank %d is %f.\n", myRank, *recvbuff); 
+    userbuff = recvbuff;
+    printf("Data in recvbuff of rank %d is %d.\n", myRank, *recvbuff); 
     assert(*recvbuff == (nRanks-myRank)/nRanks);
 
     //free device buffers

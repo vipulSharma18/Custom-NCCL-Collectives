@@ -28,9 +28,9 @@ extern "C" char const* ncclGetLastError(ncclComm_t comm);
     if( err != cudaSuccess ) {                        \
         char hostname[1024];                            \
         getHostName(hostname, 1024);                    \
-        printf("%s: Test CUDA failure %s:%d '%s'\n",    \
+        printf("%s: Test CUDA failure %s:%d '%s', error code %d\n",    \
             hostname,                                  \
-            __FILE__,__LINE__,cudaGetErrorString(err)); \
+            __FILE__,__LINE__,cudaGetErrorString(err), err); \
         return 1;                           \
     }                                                 \
 } while(0)

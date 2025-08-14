@@ -34,8 +34,14 @@ mpirun -n 2 ./build/tests/RecvSend_test
 
 ```
 adduser test
-sudo -u test mpirun -n 2 ./build/tests/RecvSend_test
+sudo -u test mpirun -n 2 ./build/tests/RecvSend_test > out.log 2>&1
 ```
+
+For debugging tests if 0x1509 is the line in the stack trace:
+```
+addr2line -e build/tests/RecvSend_test 0x1509
+```
+
 ## Roadmap:
 
 **Phase 1: NCCL APIs**

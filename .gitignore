@@ -9,3 +9,6 @@ build
 # vastai
 onstart.sh
 ports.log
+
+# test output
+out.log
