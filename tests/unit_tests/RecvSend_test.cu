@@ -21,7 +21,7 @@ int main(int argc, char* argv[]){
     // main process's creates a shared single nccl communicator ID
     ncclUniqueId id;
     ncclComm_t comm;
-    float *sendbuff, *recvbuff;
+    float *sendbuff, *recvbuff, *userbuff;
     cudaStream_t stream;
     int size = 1;
 
@@ -44,6 +44,9 @@ int main(int argc, char* argv[]){
     //init NCCL
     NCCLCHECK(ncclCommInitRank(&comm, nRanks, id, myRank));
 
+    *userbuff = myRank;
+    *sendbuff = *userbuff;
+    printf("Data in sendbuff of rank %d is %f.\n", myRank, *sendbuff); 
     printf("Running sendrecv.\n");
     if(myRank==0){
         NCCLCHECK(
@@ -57,6 +60,10 @@ int main(int argc, char* argv[]){
 
     //completing NCCL operation by synchronizing on the CUDA stream
     CUDACHECK(cudaStreamSynchronize(stream));
+
+    printf("CUDA Stream sync-ed.\n");
+    *userbuff = *recvbuff;
+    printf("Data in recvbuff of rank %d is %f.\n", myRank, *recvbuff); 
 
     //free device buffers
     CUDACHECK(cudaFree(sendbuff));
