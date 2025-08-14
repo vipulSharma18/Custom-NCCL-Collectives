@@ -19,7 +19,7 @@ git config --global user.name "Vipul Sharma"
 Pull and run container:
 ```
 docker pull ghcr.io/vipulsharma18/nccl-from-first-principles:main
-docker run --gpus all -dit vipulsharma18/nccl-from-first-principles:main
+docker run --gpus all -dit ghcr.io/vipulsharma18/nccl-from-first-principles:main
 ```
 
 ## Test Custom NCCL:
