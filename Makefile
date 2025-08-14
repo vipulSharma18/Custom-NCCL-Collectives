@@ -20,8 +20,8 @@ MPI_HOME ?= /usr/lib/x86_64-linux-gnu/openmpi
 NVCCFLAGS := -ccbin $(CXX) $(NVCC_GENCODE) -std=c++11 -O3 -g -DMPI_SUPPORT -I$(MPI_HOME)/include -I$(CUSTOM_NCCL_INCLUDE)
 CXXFLAGS := -std=c++11 -O3 -g -I$(CUDA_INC) -DMPI_SUPPORT -I$(MPI_HOME)/include -I$(CUSTOM_NCCL_INCLUDE)
 
-NVLDFLAGS := -L${CUDA_LIB} -l${CUDARTLIB} -L${NCCL_HOME} -l${NCCLLIB} -lrt -L$(MPI_HOME)/lib -lmpi
-LDFLAGS := -L${CUDA_LIB} -l${CUDARTLIB} -L${NCCL_HOME} -l${NCCLLIB} -lrt -L$(MPI_HOME)/lib -lmpi
+NVLDFLAGS := -L${CUDA_LIB} -l${CUDARTLIB} -L${NCCL_HOME} -l${NCCLLIB} -lrt -L$(MPI_HOME)/lib -lmpi -lmpi_cxx
+LDFLAGS := -L${CUDA_LIB} -l${CUDARTLIB} -L${NCCL_HOME} -l${NCCLLIB} -lrt -L$(MPI_HOME)/lib -lmpi -lmpi_cxx
 
 CUDA_VERSION = $(strip $(shell which $(NVCC) >/dev/null && $(NVCC) --version | grep release | sed 's/.*release //' | sed 's/\,.*//'))
 CUDA_MAJOR = $(shell echo $(CUDA_VERSION) | cut -d "." -f 1)
