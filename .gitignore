@@ -5,3 +5,7 @@
 *.cubin
 *.fatbin
 build
+
+# vastai
+onstart.sh
+ports.log
