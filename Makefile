@@ -80,5 +80,8 @@ clean:
 ${BUILDDIR}:
 	mkdir -p ${BUILDDIR}
 
-%.build:
-	${MAKE} -C $* build BUILDDIR=${BUILDDIR}
+src.build: ${BUILDDIR}
+	${MAKE} -C src build BUILDDIR=${BUILDDIR}
+
+tests.build: src.build ${BUILDDIR}
+	${MAKE} -C tests build BUILDDIR=${BUILDDIR}
