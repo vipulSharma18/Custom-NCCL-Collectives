@@ -2,6 +2,7 @@
 #include "nccl.h"
 #include "common.h"
 #include "cuda_runtime.h"
+#include <cassert>
 #include <stdio.h>
 #ifdef MPI_SUPPORT
 #include "mpi.h"
@@ -64,6 +65,7 @@ int main(int argc, char* argv[]){
     printf("CUDA Stream sync-ed.\n");
     *userbuff = *recvbuff;
     printf("Data in recvbuff of rank %d is %f.\n", myRank, *recvbuff); 
+    assert(*recvbuff == (nRanks-myRank)/nRanks);
 
     //free device buffers
     CUDACHECK(cudaFree(sendbuff));

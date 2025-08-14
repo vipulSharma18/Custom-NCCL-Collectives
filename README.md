@@ -8,46 +8,7 @@ The code is for educational purposes and to demonstrate the multiple layers of a
 
 The project follows [2] in structuring the code, and the design of NCCL.
 
-## Benchmarking:
-* We use https://github.com/NVIDIA/nccl-tests/tree/master to test our collectives for correctness. Since the code is primarily to simplify and understand NCCL, and not optimized like NCCL, there is very little expectation of performance matching NCCL.
-
-NCCL tests repo supports multiple processes, multiple threads, and multiple CUDA devices per thread testing. It tests for both correctness and performance, but we're only interested in correctness.
-
-When doing multi-process testing, NCCL tests uses MPI. Total ranks = num procs * num threads per proc * num GPUs per thread.
-
-For running the tests on a single node:
-```
-$ make all
-# test command for 1 gpu 1 thread, just to ensure things are working fine.
-$ ./build/all_reduce_perf -b 8 -e 128M -f 2 -g 1
-# single thread with 8 GPUs.
-$ ./build/all_reduce_perf -b 8 -e 128M -f 2 -g 8
-```
-
-If we want to test on multiple processes/multiple nodes, we need to compile the tests with MPI support.
-```
-$ make MPI=1 NAME_SUFFIX=_mpi MPI_HOME=/path/to/mpi CUDA_HOME=/path/to/cuda NCCL_HOME=/path/to/nccl
-$ mpirun -np 64 -N 8 ./build/all_reduce_perf -b 8 -e 8G -f 2 -g 1
-```
-
-Flags:
-
-**GPUs**: -t for num of threads per proc, -g for num gpus per thread.    
-**Message size**: -b for min size of message in bytes, -e for max size in bytes, -f increment multiplication factor between 2 sizes.    
-**Op args**: -o for reduction op. -d for datatype. -r for root rank.    
-
-Reference: https://github.com/NVIDIA/nccl-tests/blob/master/README.md
-
-## Build local NVIDIA-NCCL:
-Building the main branch of NVIDIA's NCCL: https://github.com/NVIDIA/nccl/tree/master
-```
-wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb
-sudo dpkg -i cuda-keyring_1.1-1_all.deb
-sudo apt-get update
-sudo apt install libnccl2 libnccl-dev
-```
-
-## Docker:
+## Build with Docker:
 Git setup:
 ```
 gh auth login
@@ -61,6 +22,20 @@ docker pull ghcr.io/vipulsharma18/nccl-from-first-principles:main
 docker run --gpus all -dit vipulsharma18/nccl-from-first-principles:main
 ```
 
+## Test Custom NCCL:
+
+* Include custom_nccl.h from src/include, and link the libcustom_nccl.so object from build dir.
+* To run tests, simply run executable in the build/tests directory like below:
+
+```
+mpirun -n 2 ./build/tests/RecvSend_test
+```
+> Note: MPI might require running as a non-root user, to create and run as a non-root user run this:
+
+```
+adduser test
+sudo -u test mpirun -n 2 ./build/tests/RecvSend_test
+```
 ## Roadmap:
 
 **Phase 1: NCCL APIs**
@@ -119,6 +94,36 @@ Figure 2 from [2]:
 
 **Phase 5: Simulating on-the-job debugging experience**
 - [ ] Breaking NCCLs: Exploration of different bugs (possibly another repo with this repo as a submodule).
+
+## Benchmarking with NCCL_PERF:
+* We use https://github.com/NVIDIA/nccl-tests/tree/master to test our collectives for correctness. Since the code is primarily to simplify and understand NCCL, and not optimized like NCCL, there is very little expectation of performance matching NCCL.
+
+NCCL tests repo supports multiple processes, multiple threads, and multiple CUDA devices per thread testing. It tests for both correctness and performance, but we're only interested in correctness.
+
+When doing multi-process testing, NCCL tests uses MPI. Total ranks = num procs * num threads per proc * num GPUs per thread.
+
+For running the tests on a single node:
+```
+$ make all
+# test command for 1 gpu 1 thread, just to ensure things are working fine.
+$ ./build/all_reduce_perf -b 8 -e 128M -f 2 -g 1
+# single thread with 8 GPUs.
+$ ./build/all_reduce_perf -b 8 -e 128M -f 2 -g 8
+```
+
+If we want to test on multiple processes/multiple nodes, we need to compile the tests with MPI support.
+```
+$ make MPI=1 NAME_SUFFIX=_mpi MPI_HOME=/path/to/mpi CUDA_HOME=/path/to/cuda NCCL_HOME=/path/to/nccl
+$ mpirun -np 64 -N 8 ./build/all_reduce_perf -b 8 -e 8G -f 2 -g 1
+```
+
+Flags:
+
+**GPUs**: -t for num of threads per proc, -g for num gpus per thread.    
+**Message size**: -b for min size of message in bytes, -e for max size in bytes, -f increment multiplication factor between 2 sizes.    
+**Op args**: -o for reduction op. -d for datatype. -r for root rank.    
+
+Reference: https://github.com/NVIDIA/nccl-tests/blob/master/README.md
 
 ## References:
 [1] S. Rennich, “CUDA C/C++ Streams and Concurrency”.    
