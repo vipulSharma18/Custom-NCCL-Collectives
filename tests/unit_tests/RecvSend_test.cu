@@ -47,17 +47,13 @@ int main(int argc, char* argv[]){
 
     userbuff = &myRank;
     sendbuff = userbuff;
-    printf("Data in sendbuff of rank %d is %d.\n", myRank, *sendbuff); 
-    printf("Running sendrecv.\n");
-    if(myRank==0){
-        NCCLCHECK(
-            custom_RecvSend((const void*)sendbuff, (void*)recvbuff, size, ncclInt8, 1, comm, stream)
-        );
-    } else {
-        NCCLCHECK(
-            custom_RecvSend((const void*)sendbuff, (void*)recvbuff, size, ncclInt8, 0, comm, stream)
-        );
-    }
+    int peer = (nRanks-myRank)/nRanks;
+    printf("Data in sendbuff of rank %d is %d.\n", myRank, *sendbuff);
+    printf("Running sendrecv. Rank %d has peer %d.\n", myRank, peer);
+
+    NCCLCHECK(
+        custom_RecvSend((const void*)sendbuff, (void*)recvbuff, size, ncclInt, peer, comm, stream)
+    );
 
     //completing NCCL operation by synchronizing on the CUDA stream
     CUDACHECK(cudaStreamSynchronize(stream));
@@ -65,7 +61,7 @@ int main(int argc, char* argv[]){
     printf("CUDA Stream sync-ed.\n");
     userbuff = recvbuff;
     printf("Data in recvbuff of rank %d is %d.\n", myRank, *recvbuff); 
-    assert(*recvbuff == (nRanks-myRank)/nRanks);
+    assert(*recvbuff == peer);
 
     //free device buffers
     CUDACHECK(cudaFree(sendbuff));
