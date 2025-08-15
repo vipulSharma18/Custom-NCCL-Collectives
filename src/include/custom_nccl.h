@@ -1,4 +1,5 @@
 // Code is borrowed and edited from NVIDIA/NCCL repo, whose copyright is below.
+// license is in this repo: https://github.com/NVIDIA/nccl/blob/master/LICENSE.txt
 /*************************************************************************
 * Copyright (c) 2015-2021, NVIDIA CORPORATION. All rights reserved.
 *
@@ -28,8 +29,9 @@
 extern "C" {
 #endif
 
-typedef custom_ncclUniqueId;
-typedef custom_ncclComm_t;
+#define CUSTOM_NCCL_UNIQUE_ID_BYTES 128
+typedef struct { char internal[CUSTOM_NCCL_UNIQUE_ID_BYTES]; } custom_ncclUniqueId;
+typedef struct custom_ncclComm* custom_ncclComm_t;
 
 /* Error type */
 typedef enum { custom_ncclSuccess      =  0,
