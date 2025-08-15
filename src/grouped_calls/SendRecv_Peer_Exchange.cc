@@ -1,26 +1,23 @@
 #include <stdio.h>
 #include "custom_nccl.h"
-#include "nccl.h"
 #include "common.h"
-#include "cuda_runtime.h"
-#ifdef MPI_SUPPORT
 #include "mpi.h"
-#endif
+#include "cuda_runtime.h"
 
-ncclResult_t custom_SendRecv(
+custom_ncclResult_t custom_SendRecv(
     const void* sendbuff,
     void* recvbuff,
     size_t size,
-    ncclDataType_t datatype,
+    custom_ncclDataType_t datatype,
     int peer,
-    ncclComm_t comm,
+    custom_ncclComm_t comm,
     cudaStream_t stream
     ){
     // p2p calls within a group are independent, so the send and recv is done concurrently.
     // peers exchange data concurrently.
-    ncclGroupStart();
-    ncclRecv(recvbuff, size, datatype, peer, comm, stream);
-    ncclSend(sendbuff, size, datatype, peer, comm, stream);
-    ncclResult_t ret = ncclGroupEnd();
-    return ret;
+    custom_ncclGroupStart();
+    custom_ncclRecv(recvbuff, size, datatype, peer, comm, stream);
+    custom_ncclSend(sendbuff, size, datatype, peer, comm, stream);
+    custom_ncclResult_t res = custom_ncclGroupEnd(); 
+    return res;
 }

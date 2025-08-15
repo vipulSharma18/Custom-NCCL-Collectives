@@ -6,24 +6,21 @@
 #ifndef __COMMON_H__
 #define __COMMON_H__
 
-#include "nccl.h"
 #include "custom_nccl.h"
 #include <cstring>
 #include <stdio.h>
 #include <cstdint>
 #include <algorithm>
 #include <string>
-#ifdef MPI_SUPPORT
 #include "mpi.h"
-#endif
 #include <pthread.h>
 #include <unistd.h>
 #include <stdint.h>
 
 // For nccl.h < 2.13 since we define a weak fallback
-extern "C" char const* ncclGetLastError(ncclComm_t comm);
+extern "C" char const* custom_ncclGetLastError(custom_ncclComm_t comm);
 
-#define CUDACHECK(cmd) do {                         \
+#define CUDACHECK(cmd) do {                             \
     cudaError_t err = cmd;                            \
     if( err != cudaSuccess ) {                        \
         char hostname[1024];                            \
@@ -32,38 +29,9 @@ extern "C" char const* ncclGetLastError(ncclComm_t comm);
             hostname,                                  \
             __FILE__,__LINE__,cudaGetErrorString(err), err); \
         return 1;                           \
-    }                                                 \
-} while(0)
+    }                                                   \
+} while(0)                                                   
 
-#if NCCL_VERSION_CODE >= NCCL_VERSION(2,13,0)
-#define NCCLCHECK(cmd) do {                         \
-    ncclResult_t res = cmd;                           \
-    if (res != ncclSuccess) {                         \
-        char hostname[1024];                            \
-        getHostName(hostname, 1024);                    \
-        printf("%s: Test NCCL failure %s:%d "           \
-            "'%s / %s'\n",                           \
-            hostname,__FILE__,__LINE__,              \
-            ncclGetErrorString(res),                 \
-            ncclGetLastError(NULL));                 \
-        return 1;                           \
-    }                                                 \
-} while(0)
-#else
-#define NCCLCHECK(cmd) do {                         \
-    ncclResult_t res = cmd;                           \
-    if (res != ncclSuccess) {                         \
-        char hostname[1024];                            \
-        getHostName(hostname, 1024);                    \
-        printf("%s: Test NCCL failure %s:%d '%s'\n",    \
-            hostname,                                  \
-            __FILE__,__LINE__,ncclGetErrorString(res)); \
-        return testNcclError;                           \
-    }                                                 \
-} while(0)
-#endif
-
-#ifdef MPI_SUPPORT
 #define MPICHECK(cmd) do {                          \
     int e = cmd;                                      \
     if( e != MPI_SUCCESS ) {                          \
@@ -71,22 +39,22 @@ extern "C" char const* ncclGetLastError(ncclComm_t comm);
           __FILE__,__LINE__, e);   \
       exit(EXIT_FAILURE);                             \
     }                                                 \
-  } while(0)  
-#endif
+} while(0)  
 
-#define CUSTOMNCCLCHECK(cmd) do {                         \
-    custom_ncclResult_t res = cmd;                           \
-    if (res != custom_ncclSuccess) {                         \
-        char hostname[1024];                            \
-        getHostName(hostname, 1024);                    \
-        printf("%s: Test NCCL failure %s:%d "           \
-            "'%s / %s'\n",                           \
-            hostname,__FILE__,__LINE__,              \
-            ncclGetErrorString(res),                 \
-            ncclGetLastError(NULL));                 \
-        return 1;                           \
-    }                                                 \
-} while(0)
+//ensure backward compatibility with NCCLCHECK and NCCL calls by typecasting res to int
+#define CUSTOMNCCLCHECK(cmd) do {                           \
+    custom_ncclResult_t res = custom_ncclResult_t(int(cmd));                        \
+    if (res != custom_ncclSuccess) {                      \
+        char hostname[1024];                              \
+        getHostName(hostname, 1024);                      \
+        printf("%s: Test CUSTOM NCCL failure %s:%d "        \
+            "'%s / %s'\n",                                \
+            hostname,__FILE__,__LINE__,                   \
+            custom_ncclGetErrorString(res),                 \
+            custom_ncclGetLastError(NULL));                      \
+        return res;                                       \
+    }                                                     \
+} while(0)                                                        
 
 static void getHostName(char* hostname, int maxlen) {
     gethostname(hostname, maxlen);

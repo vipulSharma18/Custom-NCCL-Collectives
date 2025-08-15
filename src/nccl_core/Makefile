@@ -1,6 +1,6 @@
 BUILDDIR ?= ../../build
-P2P_BUILDDIR ?= $(BUILDDIR)/point_to_point_communication
-override P2P_BUILDDIR := $(abspath $(P2P_BUILDDIR))
+NCCL_CORE_BUILDDIR ?= $(BUILDDIR)/nccl_core
+override NCCL_CORE_BUILDDIR := $(abspath $(NCCL_CORE_BUILDDIR))
 
 .PHONY: build clean
 
@@ -12,21 +12,21 @@ CC_TARGETS := $(CC_FILES:.cc=.o)
 CU_TARGETS := $(CU_FILES:.cu=)
 
 # Build targets
-build: $(CC_TARGETS:%.o=${P2P_BUILDDIR}/%.o) $(CU_TARGETS:%=${P2P_BUILDDIR}/%)
+build: $(CC_TARGETS:%.o=${NCCL_CORE_BUILDDIR}/%.o) $(CU_TARGETS:%=${NCCL_CORE_BUILDDIR}/%)
 
 # Compile each .cu file to executable
-${P2P_BUILDDIR}/%: %.cu
+${NCCL_CORE_BUILDDIR}/%: %.cu
 	@echo "Building $@ from $<"
 	$(NVCC) $(NVCCFLAGS) $(CXXFLAGS) -o $@ $< $(NVLDFLAGS)
 	@echo "Built $@ successfully"
 
 # compile only, not generating final executable with linking
-${P2P_BUILDDIR}/%.o: %.cc
+${NCCL_CORE_BUILDDIR}/%.o: %.cc
 	@echo "Building $@ from $<"
 	$(CXX) $(CXXFLAGS) -o $@ -c $<
 	@echo "Built $@ successfully"
 
 clean:
-	@echo "Cleaning p2p_communication..."
-	rm -rf $(P2P_BUILDDIR)
-	@echo "Cleaned $(P2P_BUILDDIR)"
+	@echo "Cleaning NCCL_CORE BUILDDIR..."
+	rm -rf $(NCCL_CORE_BUILDDIR)
+	@echo "Cleaned $(NCCL_CORE_BUILDDIR)"

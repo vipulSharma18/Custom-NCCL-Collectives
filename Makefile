@@ -2,7 +2,7 @@
 BUILDDIR ?= build
 override BUILDDIR := $(abspath $(BUILDDIR))
 
-CUSTOM_NCCL_INCLUDE ?= $(CURDIR)/src/include
+CUSTOM_NCCL_INCLUDE := $(CURDIR)/src/include
 EXPORTED_LIB_NAME = libcustom_nccl.so
 EXPORTED_LIB_TARGET = $(BUILDDIR)/$(EXPORTED_LIB_NAME)
 
@@ -17,8 +17,10 @@ NCCLLIB ?= nccl
 
 MPI_HOME ?= /usr/lib/x86_64-linux-gnu/openmpi
 
-NVCCFLAGS := -ccbin $(CXX) $(NVCC_GENCODE) -std=c++11 -O3 -g -DMPI_SUPPORT -I$(MPI_HOME)/include -I$(CUSTOM_NCCL_INCLUDE)
-CXXFLAGS := -std=c++11 -O3 -g -I$(CUDA_INC) -DMPI_SUPPORT -I$(MPI_HOME)/include -I$(CUSTOM_NCCL_INCLUDE)
+NVCCFLAGS := -ccbin $(CXX) $(NVCC_GENCODE) -std=c++11 -O3 -g -I$(MPI_HOME)/include \
+	-I$(CUSTOM_NCCL_INCLUDE)
+CXXFLAGS := -std=c++11 -O3 -g -I$(CUDA_INC) -I$(MPI_HOME)/include \
+	-I$(CUSTOM_NCCL_INCLUDE)
 
 NVLDFLAGS := -L${CUDA_LIB} -l${CUDARTLIB} -L${NCCL_HOME} -l${NCCLLIB} -L$(MPI_HOME)/lib -lmpi -lmpi_cxx
 LDFLAGS := -L${CUDA_LIB} -l${CUDARTLIB} -L${NCCL_HOME} -l${NCCLLIB} -L$(MPI_HOME)/lib -lmpi -lmpi_cxx

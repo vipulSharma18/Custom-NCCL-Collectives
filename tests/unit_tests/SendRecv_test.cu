@@ -1,12 +1,9 @@
 #include "custom_nccl.h"
-#include "nccl.h"
 #include "common.h"
 #include "cuda_runtime.h"
 #include <cassert>
 #include <stdio.h>
-#ifdef MPI_SUPPORT
 #include "mpi.h"
-#endif
 
 int main(int argc, char* argv[]){
 
@@ -20,8 +17,8 @@ int main(int argc, char* argv[]){
     assert(nRanks == 2);
 
     // main process's creates a shared single nccl communicator ID
-    ncclUniqueId id;
-    ncclComm_t comm;
+    custom_ncclUniqueId id;
+    custom_ncclComm_t comm;
     int *sendbuff, *recvbuff;
     int host_buffer;
     cudaStream_t stream;
@@ -29,7 +26,7 @@ int main(int argc, char* argv[]){
 
     // create unique id for communicator on rank 0 and bcast it to other ranks using MPI
     if(myRank == 0){
-        ncclGetUniqueId(&id);
+        custom_ncclGetUniqueId(&id);
     }
     MPICHECK(MPI_Bcast((void *)&id, sizeof(id), MPI_BYTE, 0, MPI_COMM_WORLD));
 
@@ -44,7 +41,7 @@ int main(int argc, char* argv[]){
     CUDACHECK(cudaStreamCreate(&stream));
 
     //init NCCL
-    NCCLCHECK(ncclCommInitRank(&comm, nRanks, id, myRank));
+    CUSTOMNCCLCHECK(custom_ncclCommInitRank(&comm, nRanks, id, myRank));
 
     int peer = (nRanks-myRank)/nRanks;
     host_buffer = myRank;
@@ -52,8 +49,8 @@ int main(int argc, char* argv[]){
     printf("Data in sendbuff of rank %d is %d.\n", myRank, host_buffer);
     printf("Running sendrecv. Rank %d has peer %d.\n", myRank, peer);
 
-    NCCLCHECK(
-        custom_SendRecv((const void*)sendbuff, (void*)recvbuff, size, ncclInt, peer, comm, stream)
+    CUSTOMNCCLCHECK(
+        custom_SendRecv((const void*)sendbuff, (void*)recvbuff, size, custom_ncclInt, peer, comm, stream)
     );
 
     //completing NCCL operation by synchronizing on the CUDA stream
@@ -72,7 +69,7 @@ int main(int argc, char* argv[]){
     CUDACHECK(cudaStreamDestroy(stream));
     
     //finalize NCCL
-    NCCLCHECK(ncclCommDestroy(comm));
+    CUSTOMNCCLCHECK(custom_ncclCommDestroy(comm));
 
     //finalizing MPI
     MPICHECK(MPI_Finalize());

@@ -9,7 +9,6 @@
 #define CUSTOM_NCCL_H_
 
 #include <cstddef>
-#include "nccl.h"  // for bootstrapping custom nccl, will remove as a dependency slowly.
 #include <cuda_runtime.h>
 #include <cuda_fp16.h>
 #if CUDART_VERSION >= 11000
@@ -28,6 +27,9 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+typedef custom_ncclUniqueId;
+typedef custom_ncclComm_t;
 
 /* Error type */
 typedef enum { custom_ncclSuccess                 =  0,
@@ -57,28 +59,42 @@ typedef enum {
     custom_ncclNumTypes   = 12
 } custom_ncclDataType_t;
 
-// p2p
-ncclResult_t custom_Send();
-ncclResult_t custom_Recv();
+// nccl_core communicator
+custom_ncclResult_t custom_ncclCommDestroy();
+custom_ncclResult_t custom_ncclCommInitRank();
+custom_ncclResult_t custom_ncclGetUniqueId();
+
+// nccl_core group management
+custom_ncclResult_t custom_ncclGroupStart();
+custom_ncclResult_t custom_ncclGroupEnd();
+
+// nccl_core error management
+custom_ncclResult_t custom_ncclGetErrorString();
+custom_ncclResult_t custom_ncclGetLastError();
+
+// p2p - part of nccl_core
+custom_ncclResult_t custom_ncclSend(const void* sendbuff, size_t count,
+    custom_ncclDataType_t datatype, int peer, custom_ncclComm_t comm, cudaStream_t stream);
+custom_ncclResult_t custom_ncclRecv(void* recvbuff, size_t count,
+    custom_ncclDataType_t datatype, int peer, custom_ncclComm_t comm, cudaStream_t stream);
 
 // p2p grouped calls
-ncclResult_t custom_SendRecv(const void* sendbuff, void* recvbuff, size_t count,
-    ncclDataType_t datatype, int peer, ncclComm_t comm, cudaStream_t stream);
-ncclResult_t custom_AllToAll();
-ncclResult_t custom_NeighborExchange();
-ncclResult_t custom_Gather();
-ncclResult_t custom_Satter();
-ncclResult_t custom_RecvCopySend(const void* sendbuff, void* recvbuff, size_t count,
-    ncclDataType_t datatype, int peer, ncclComm_t comm, cudaStream_t stream);
-ncclResult_t custom_RecvReduceCopySend();
-ncclResult_t custom_RecvReduceSend();
+custom_ncclResult_t custom_SendRecv(const void* sendbuff, void* recvbuff, size_t count,
+    custom_ncclDataType_t datatype, int peer, custom_ncclComm_t comm, cudaStream_t stream);
+custom_ncclResult_t custom_AllToAll();
+custom_ncclResult_t custom_NeighborExchange();
+custom_ncclResult_t custom_Gather();
+custom_ncclResult_t custom_Satter();
+custom_ncclResult_t custom_RecvCopySend();
+custom_ncclResult_t custom_RecvReduceCopySend();
+custom_ncclResult_t custom_RecvReduceSend();
 
 // collectives
-ncclResult_t custom_Broadcast();
-ncclResult_t custom_AllReduce();
-ncclResult_t custom_ReduceScatter();
-ncclResult_t custom_AllGather();
-ncclResult_t custom_Reduce();
+custom_ncclResult_t custom_Broadcast();
+custom_ncclResult_t custom_AllReduce();
+custom_ncclResult_t custom_ReduceScatter();
+custom_ncclResult_t custom_AllGather();
+custom_ncclResult_t custom_Reduce();
 
 #ifdef __cplusplus
 } // end extern "C"
