@@ -101,7 +101,7 @@ Figure 2 from [2]:
 **Phase 5: Simulating on-the-job debugging experience**
 - [ ] Breaking NCCLs: Exploration of different bugs (possibly another repo with this repo as a submodule).
 
-## Benchmarking with NCCL_PERF:
+## (Deprecated) Benchmarking with NCCL_PERF:
 * We use https://github.com/NVIDIA/nccl-tests/tree/master to test our collectives for correctness. Since the code is primarily to simplify and understand NCCL, and not optimized like NCCL, there is very little expectation of performance matching NCCL.
 
 NCCL tests repo supports multiple processes, multiple threads, and multiple CUDA devices per thread testing. It tests for both correctness and performance, but we're only interested in correctness.
