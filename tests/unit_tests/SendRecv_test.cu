@@ -53,7 +53,7 @@ int main(int argc, char* argv[]){
     printf("Running sendrecv. Rank %d has peer %d.\n", myRank, peer);
 
     NCCLCHECK(
-        custom_RecvSend((const void*)sendbuff, (void*)recvbuff, size, ncclInt, peer, comm, stream)
+        custom_SendRecv((const void*)sendbuff, (void*)recvbuff, size, ncclInt, peer, comm, stream)
     );
 
     //completing NCCL operation by synchronizing on the CUDA stream

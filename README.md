@@ -28,18 +28,18 @@ docker run --gpus all -dit ghcr.io/vipulsharma18/nccl-from-first-principles:main
 * To run tests, simply run executable in the build/tests directory like below:
 
 ```
-mpirun -n 2 ./build/tests/RecvSend_test
+mpirun -n 2 ./build/tests/SendRecv_test
 ```
 > Note: MPI might require running as a non-root user, to create and run as a non-root user run this:
 
 ```
 adduser test
-sudo -u test mpirun -n 2 ./build/tests/RecvSend_test > out.log 2>&1
+sudo -u test mpirun -n 2 ./build/tests/SendRecv_test > out.log 2>&1
 ```
 
 For debugging tests if 0x1509 is the line in the stack trace:
 ```
-addr2line -e build/tests/RecvSend_test 0x1509
+addr2line -e build/tests/SendRecv_test 0x1509
 ```
 
 ## Roadmap:
@@ -51,7 +51,7 @@ addr2line -e build/tests/RecvSend_test 0x1509
 	- [x] Docker containerization to deploy on VastAI.
 	- [x] GitHub workflow with Docker build and push to DockerHub setup to avoid slow local builds.
 - [ ] Point2Point Communication APIs (NCCL grouped calls)
-	- [x] recvSend
+	- [x] SendRecv (1 Peer Exchange)
 	- [ ] All-to-All
  	- [ ] All-to-One (Gather)
  	- [ ] Neighbor Exchange

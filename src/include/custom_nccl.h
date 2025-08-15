@@ -58,7 +58,11 @@ typedef enum {
 } custom_ncclDataType_t;
 
 // p2p
-ncclResult_t custom_RecvSend(const void* sendbuff, void* recvbuff, size_t count,
+ncclResult_t custom_Send();
+ncclResult_t custom_Recv();
+
+// p2p grouped calls
+ncclResult_t custom_SendRecv(const void* sendbuff, void* recvbuff, size_t count,
     ncclDataType_t datatype, int peer, ncclComm_t comm, cudaStream_t stream);
 ncclResult_t custom_AllToAll();
 ncclResult_t custom_NeighborExchange();
