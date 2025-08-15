@@ -61,17 +61,17 @@ typedef enum {
 } custom_ncclDataType_t;
 
 // nccl_core communicator
-custom_ncclResult_t custom_ncclCommDestroy();
-custom_ncclResult_t custom_ncclCommInitRank();
-custom_ncclResult_t custom_ncclGetUniqueId();
+custom_ncclResult_t custom_ncclGetUniqueId(custom_ncclUniqueId* uniqueId);
+custom_ncclResult_t custom_ncclCommInitRank(custom_ncclComm_t* comm, int nranks, custom_ncclUniqueId commId, int rank);
+custom_ncclResult_t custom_ncclCommDestroy(custom_ncclComm_t comm);
 
 // nccl_core group management
 custom_ncclResult_t custom_ncclGroupStart();
 custom_ncclResult_t custom_ncclGroupEnd();
 
 // nccl_core error management
-custom_ncclResult_t custom_ncclGetErrorString();
-custom_ncclResult_t custom_ncclGetLastError();
+const char* custom_ncclGetErrorString(custom_ncclResult_t result);
+const char* custom_ncclGetLastError(custom_ncclComm_t comm);
 
 // p2p - part of nccl_core
 custom_ncclResult_t custom_ncclSend(const void* sendbuff, size_t count,

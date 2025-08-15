@@ -1,3 +1,5 @@
+// We heavily edit code from the common.h of nccl_perf repo from nvidia.
+// still the copyright is below if needed, with license: https://github.com/NVIDIA/nccl-tests/blob/master/LICENSE.txt 
 /*************************************************************************
 * Copyright (c) 2016-2022, NVIDIA CORPORATION. All rights reserved.
 *
@@ -17,8 +19,6 @@
 #include <unistd.h>
 #include <stdint.h>
 
-// For nccl.h < 2.13 since we define a weak fallback
-extern "C" char const* custom_ncclGetLastError(custom_ncclComm_t comm);
 
 #define CUDACHECK(cmd) do {                             \
     cudaError_t err = cmd;                            \
