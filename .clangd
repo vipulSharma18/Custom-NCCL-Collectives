@@ -1,2 +1,2 @@
 CompileFlags:
-  Add: [--include=./src/include/*, --include=/usr/local/cuda/include]
+  Add: [--include=./src/include/common.h, --include=./src/include/custom_nccl.h, -I/usr/local/cuda/include]
