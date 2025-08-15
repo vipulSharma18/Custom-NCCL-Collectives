@@ -32,7 +32,7 @@ typedef custom_ncclUniqueId;
 typedef custom_ncclComm_t;
 
 /* Error type */
-typedef enum { custom_ncclSuccess                 =  0,
+typedef enum { custom_ncclSuccess      =  0,
     custom_ncclUnhandledCudaError      =  1,
     custom_ncclSystemError             =  2,
     custom_ncclInternalError           =  3,
@@ -40,7 +40,8 @@ typedef enum { custom_ncclSuccess                 =  0,
     custom_ncclInvalidUsage            =  5,
     custom_ncclRemoteError             =  6,
     custom_ncclInProgress              =  7,
-    custom_ncclNumResults              =  8 } custom_ncclResult_t;
+    custom_ncclNumResults              =  8 
+} custom_ncclResult_t;
 
 /* Data types */ //TODO: extend this for fp4
 typedef enum {

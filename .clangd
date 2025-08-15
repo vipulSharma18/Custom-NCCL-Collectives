@@ -1,6 +1,2 @@
 CompileFlags:
-  Add: [
-    "-I./src/include",
-    "-I/usr/local/cuda/include",
-    "-I/usr/lib/x86_64-linux-gnu/openmpi/include"
-  ]
+  Add: [--include=./src/include/*, --include=/usr/local/cuda/include]
