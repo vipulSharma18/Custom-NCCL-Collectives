@@ -73,7 +73,11 @@ addr2line -e build/tests/RecvSend_test 0x1509
  		- [ ] Reduce
  		- [ ] ReduceScatter
 
-**Phase 2: Diving Deeper into NCCL, Transport Layer**
+**Phase 2: NCCL Torch Integration**
+- [ ] Creating Process Group/Custom Distributed Backend for PyTorch.
+- [ ] Integrating the project with the Abstraction Layers of GPU Parallelism project: https://github.com/vipulSharma18/The-Abstraction-Layers-of-GPU-Parallelism/tree/main
+
+**Phase 3: Diving Deeper into NCCL, Transport Layer**
 - [ ] Intranode Data Transfer
 	- [ ] P2P (IPC/CUDA Memory): Data transfer between two GPUs via PCIe bus, or NVLink, via an intermediate FIFO buffer.
 	- [ ] P2P (Direct): Support direct access to device buffers over NVLink and PCIe.
@@ -91,12 +95,8 @@ Figure 2 from [2]:
 
 <img width="648" height="642" alt="image" src="https://github.com/user-attachments/assets/8ae4ee1e-9f0d-4292-8e49-299287240e8d" />
 
-
-**Phase 3: Asynchronous GPU Communication, fault tolerance, and dynamic work group management**
+**Phase 4: Asynchronous GPU Communication, fault tolerance, and dynamic work group management**
 - [ ] Explore Prime's Communication Collective Library (PCCL).
-
-**Phase 4: NCCL Torch Integration**
-- [ ] Process Group/Custom Distributed Backend for PyTorch.
 
 **Phase 5: Simulating on-the-job debugging experience**
 - [ ] Breaking NCCLs: Exploration of different bugs (possibly another repo with this repo as a submodule).
