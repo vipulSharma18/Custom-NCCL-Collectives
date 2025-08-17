@@ -1,0 +1,388 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-std=c++11",
+      "-O3",
+      "-g",
+      "-I/usr/local/cuda/include",
+      "-I/usr/lib/x86_64-linux-gnu/openmpi/include",
+      "-I/home/vipul/code/Custom-NCCL-Collectives/src/include",
+      "-fPIC",
+      "-c",
+      "-o",
+      "/home/vipul/code/Custom-NCCL-Collectives/build/nccl_core/communicator.o",
+      "communicator.cc"
+    ],
+    "directory": "/home/vipul/code/Custom-NCCL-Collectives/src/nccl_core",
+    "file": "/home/vipul/code/Custom-NCCL-Collectives/src/nccl_core/communicator.cc",
+    "output": "/home/vipul/code/Custom-NCCL-Collectives/build/nccl_core/communicator.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-std=c++11",
+      "-O3",
+      "-g",
+      "-I/usr/local/cuda/include",
+      "-I/usr/lib/x86_64-linux-gnu/openmpi/include",
+      "-I/home/vipul/code/Custom-NCCL-Collectives/src/include",
+      "-fPIC",
+      "-c",
+      "-o",
+      "/home/vipul/code/Custom-NCCL-Collectives/build/nccl_core/groups.o",
+      "groups.cc"
+    ],
+    "directory": "/home/vipul/code/Custom-NCCL-Collectives/src/nccl_core",
+    "file": "/home/vipul/code/Custom-NCCL-Collectives/src/nccl_core/groups.cc",
+    "output": "/home/vipul/code/Custom-NCCL-Collectives/build/nccl_core/groups.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-std=c++11",
+      "-O3",
+      "-g",
+      "-I/usr/local/cuda/include",
+      "-I/usr/lib/x86_64-linux-gnu/openmpi/include",
+      "-I/home/vipul/code/Custom-NCCL-Collectives/src/include",
+      "-fPIC",
+      "-c",
+      "-o",
+      "/home/vipul/code/Custom-NCCL-Collectives/build/nccl_core/Recv.o",
+      "Recv.cc"
+    ],
+    "directory": "/home/vipul/code/Custom-NCCL-Collectives/src/nccl_core",
+    "file": "/home/vipul/code/Custom-NCCL-Collectives/src/nccl_core/Recv.cc",
+    "output": "/home/vipul/code/Custom-NCCL-Collectives/build/nccl_core/Recv.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-std=c++11",
+      "-O3",
+      "-g",
+      "-I/usr/local/cuda/include",
+      "-I/usr/lib/x86_64-linux-gnu/openmpi/include",
+      "-I/home/vipul/code/Custom-NCCL-Collectives/src/include",
+      "-fPIC",
+      "-c",
+      "-o",
+      "/home/vipul/code/Custom-NCCL-Collectives/build/nccl_core/Send.o",
+      "Send.cc"
+    ],
+    "directory": "/home/vipul/code/Custom-NCCL-Collectives/src/nccl_core",
+    "file": "/home/vipul/code/Custom-NCCL-Collectives/src/nccl_core/Send.cc",
+    "output": "/home/vipul/code/Custom-NCCL-Collectives/build/nccl_core/Send.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-std=c++11",
+      "-O3",
+      "-g",
+      "-I/usr/local/cuda/include",
+      "-I/usr/lib/x86_64-linux-gnu/openmpi/include",
+      "-I/home/vipul/code/Custom-NCCL-Collectives/src/include",
+      "-fPIC",
+      "-c",
+      "-o",
+      "/home/vipul/code/Custom-NCCL-Collectives/build/grouped_calls/AllToAll.o",
+      "AllToAll.cc"
+    ],
+    "directory": "/home/vipul/code/Custom-NCCL-Collectives/src/grouped_calls",
+    "file": "/home/vipul/code/Custom-NCCL-Collectives/src/grouped_calls/AllToAll.cc",
+    "output": "/home/vipul/code/Custom-NCCL-Collectives/build/grouped_calls/AllToAll.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-std=c++11",
+      "-O3",
+      "-g",
+      "-I/usr/local/cuda/include",
+      "-I/usr/lib/x86_64-linux-gnu/openmpi/include",
+      "-I/home/vipul/code/Custom-NCCL-Collectives/src/include",
+      "-fPIC",
+      "-c",
+      "-o",
+      "/home/vipul/code/Custom-NCCL-Collectives/build/grouped_calls/AllToOne_Gather.o",
+      "AllToOne_Gather.cc"
+    ],
+    "directory": "/home/vipul/code/Custom-NCCL-Collectives/src/grouped_calls",
+    "file": "/home/vipul/code/Custom-NCCL-Collectives/src/grouped_calls/AllToOne_Gather.cc",
+    "output": "/home/vipul/code/Custom-NCCL-Collectives/build/grouped_calls/AllToOne_Gather.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-std=c++11",
+      "-O3",
+      "-g",
+      "-I/usr/local/cuda/include",
+      "-I/usr/lib/x86_64-linux-gnu/openmpi/include",
+      "-I/home/vipul/code/Custom-NCCL-Collectives/src/include",
+      "-fPIC",
+      "-c",
+      "-o",
+      "/home/vipul/code/Custom-NCCL-Collectives/build/grouped_calls/NeighborExchange.o",
+      "NeighborExchange.cc"
+    ],
+    "directory": "/home/vipul/code/Custom-NCCL-Collectives/src/grouped_calls",
+    "file": "/home/vipul/code/Custom-NCCL-Collectives/src/grouped_calls/NeighborExchange.cc",
+    "output": "/home/vipul/code/Custom-NCCL-Collectives/build/grouped_calls/NeighborExchange.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-std=c++11",
+      "-O3",
+      "-g",
+      "-I/usr/local/cuda/include",
+      "-I/usr/lib/x86_64-linux-gnu/openmpi/include",
+      "-I/home/vipul/code/Custom-NCCL-Collectives/src/include",
+      "-fPIC",
+      "-c",
+      "-o",
+      "/home/vipul/code/Custom-NCCL-Collectives/build/grouped_calls/OneToAll_Scatter.o",
+      "OneToAll_Scatter.cc"
+    ],
+    "directory": "/home/vipul/code/Custom-NCCL-Collectives/src/grouped_calls",
+    "file": "/home/vipul/code/Custom-NCCL-Collectives/src/grouped_calls/OneToAll_Scatter.cc",
+    "output": "/home/vipul/code/Custom-NCCL-Collectives/build/grouped_calls/OneToAll_Scatter.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-std=c++11",
+      "-O3",
+      "-g",
+      "-I/usr/local/cuda/include",
+      "-I/usr/lib/x86_64-linux-gnu/openmpi/include",
+      "-I/home/vipul/code/Custom-NCCL-Collectives/src/include",
+      "-fPIC",
+      "-c",
+      "-o",
+      "/home/vipul/code/Custom-NCCL-Collectives/build/grouped_calls/RecvCopySend.o",
+      "RecvCopySend.cc"
+    ],
+    "directory": "/home/vipul/code/Custom-NCCL-Collectives/src/grouped_calls",
+    "file": "/home/vipul/code/Custom-NCCL-Collectives/src/grouped_calls/RecvCopySend.cc",
+    "output": "/home/vipul/code/Custom-NCCL-Collectives/build/grouped_calls/RecvCopySend.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-std=c++11",
+      "-O3",
+      "-g",
+      "-I/usr/local/cuda/include",
+      "-I/usr/lib/x86_64-linux-gnu/openmpi/include",
+      "-I/home/vipul/code/Custom-NCCL-Collectives/src/include",
+      "-fPIC",
+      "-c",
+      "-o",
+      "/home/vipul/code/Custom-NCCL-Collectives/build/grouped_calls/RecvReduceCopySend.o",
+      "RecvReduceCopySend.cc"
+    ],
+    "directory": "/home/vipul/code/Custom-NCCL-Collectives/src/grouped_calls",
+    "file": "/home/vipul/code/Custom-NCCL-Collectives/src/grouped_calls/RecvReduceCopySend.cc",
+    "output": "/home/vipul/code/Custom-NCCL-Collectives/build/grouped_calls/RecvReduceCopySend.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-std=c++11",
+      "-O3",
+      "-g",
+      "-I/usr/local/cuda/include",
+      "-I/usr/lib/x86_64-linux-gnu/openmpi/include",
+      "-I/home/vipul/code/Custom-NCCL-Collectives/src/include",
+      "-fPIC",
+      "-c",
+      "-o",
+      "/home/vipul/code/Custom-NCCL-Collectives/build/grouped_calls/RecvReduceSend.o",
+      "RecvReduceSend.cc"
+    ],
+    "directory": "/home/vipul/code/Custom-NCCL-Collectives/src/grouped_calls",
+    "file": "/home/vipul/code/Custom-NCCL-Collectives/src/grouped_calls/RecvReduceSend.cc",
+    "output": "/home/vipul/code/Custom-NCCL-Collectives/build/grouped_calls/RecvReduceSend.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-std=c++11",
+      "-O3",
+      "-g",
+      "-I/usr/local/cuda/include",
+      "-I/usr/lib/x86_64-linux-gnu/openmpi/include",
+      "-I/home/vipul/code/Custom-NCCL-Collectives/src/include",
+      "-fPIC",
+      "-c",
+      "-o",
+      "/home/vipul/code/Custom-NCCL-Collectives/build/grouped_calls/SendRecv_Peer_Exchange.o",
+      "SendRecv_Peer_Exchange.cc"
+    ],
+    "directory": "/home/vipul/code/Custom-NCCL-Collectives/src/grouped_calls",
+    "file": "/home/vipul/code/Custom-NCCL-Collectives/src/grouped_calls/SendRecv_Peer_Exchange.cc",
+    "output": "/home/vipul/code/Custom-NCCL-Collectives/build/grouped_calls/SendRecv_Peer_Exchange.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-std=c++11",
+      "-O3",
+      "-g",
+      "-I/usr/local/cuda/include",
+      "-I/usr/lib/x86_64-linux-gnu/openmpi/include",
+      "-I/home/vipul/code/Custom-NCCL-Collectives/src/include",
+      "-fPIC",
+      "-c",
+      "-o",
+      "/home/vipul/code/Custom-NCCL-Collectives/build/collective_communication/ring.o",
+      "ring.cc"
+    ],
+    "directory": "/home/vipul/code/Custom-NCCL-Collectives/src/collective_communication/algorithms",
+    "file": "/home/vipul/code/Custom-NCCL-Collectives/src/collective_communication/algorithms/ring.cc",
+    "output": "/home/vipul/code/Custom-NCCL-Collectives/build/collective_communication/ring.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-std=c++11",
+      "-O3",
+      "-g",
+      "-I/usr/local/cuda/include",
+      "-I/usr/lib/x86_64-linux-gnu/openmpi/include",
+      "-I/home/vipul/code/Custom-NCCL-Collectives/src/include",
+      "-fPIC",
+      "-c",
+      "-o",
+      "/home/vipul/code/Custom-NCCL-Collectives/build/collective_communication/tree.o",
+      "tree.cc"
+    ],
+    "directory": "/home/vipul/code/Custom-NCCL-Collectives/src/collective_communication/algorithms",
+    "file": "/home/vipul/code/Custom-NCCL-Collectives/src/collective_communication/algorithms/tree.cc",
+    "output": "/home/vipul/code/Custom-NCCL-Collectives/build/collective_communication/tree.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-std=c++11",
+      "-O3",
+      "-g",
+      "-I/usr/local/cuda/include",
+      "-I/usr/lib/x86_64-linux-gnu/openmpi/include",
+      "-I/home/vipul/code/Custom-NCCL-Collectives/src/include",
+      "-fPIC",
+      "-c",
+      "-o",
+      "/home/vipul/code/Custom-NCCL-Collectives/build/collective_communication/AllGather.o",
+      "AllGather.cc"
+    ],
+    "directory": "/home/vipul/code/Custom-NCCL-Collectives/src/collective_communication/operations",
+    "file": "/home/vipul/code/Custom-NCCL-Collectives/src/collective_communication/operations/AllGather.cc",
+    "output": "/home/vipul/code/Custom-NCCL-Collectives/build/collective_communication/AllGather.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-std=c++11",
+      "-O3",
+      "-g",
+      "-I/usr/local/cuda/include",
+      "-I/usr/lib/x86_64-linux-gnu/openmpi/include",
+      "-I/home/vipul/code/Custom-NCCL-Collectives/src/include",
+      "-fPIC",
+      "-c",
+      "-o",
+      "/home/vipul/code/Custom-NCCL-Collectives/build/collective_communication/AllReduce.o",
+      "AllReduce.cc"
+    ],
+    "directory": "/home/vipul/code/Custom-NCCL-Collectives/src/collective_communication/operations",
+    "file": "/home/vipul/code/Custom-NCCL-Collectives/src/collective_communication/operations/AllReduce.cc",
+    "output": "/home/vipul/code/Custom-NCCL-Collectives/build/collective_communication/AllReduce.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-std=c++11",
+      "-O3",
+      "-g",
+      "-I/usr/local/cuda/include",
+      "-I/usr/lib/x86_64-linux-gnu/openmpi/include",
+      "-I/home/vipul/code/Custom-NCCL-Collectives/src/include",
+      "-fPIC",
+      "-c",
+      "-o",
+      "/home/vipul/code/Custom-NCCL-Collectives/build/collective_communication/Broadcast.o",
+      "Broadcast.cc"
+    ],
+    "directory": "/home/vipul/code/Custom-NCCL-Collectives/src/collective_communication/operations",
+    "file": "/home/vipul/code/Custom-NCCL-Collectives/src/collective_communication/operations/Broadcast.cc",
+    "output": "/home/vipul/code/Custom-NCCL-Collectives/build/collective_communication/Broadcast.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-std=c++11",
+      "-O3",
+      "-g",
+      "-I/usr/local/cuda/include",
+      "-I/usr/lib/x86_64-linux-gnu/openmpi/include",
+      "-I/home/vipul/code/Custom-NCCL-Collectives/src/include",
+      "-fPIC",
+      "-c",
+      "-o",
+      "/home/vipul/code/Custom-NCCL-Collectives/build/collective_communication/Reduce.o",
+      "Reduce.cc"
+    ],
+    "directory": "/home/vipul/code/Custom-NCCL-Collectives/src/collective_communication/operations",
+    "file": "/home/vipul/code/Custom-NCCL-Collectives/src/collective_communication/operations/Reduce.cc",
+    "output": "/home/vipul/code/Custom-NCCL-Collectives/build/collective_communication/Reduce.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-std=c++11",
+      "-O3",
+      "-g",
+      "-I/usr/local/cuda/include",
+      "-I/usr/lib/x86_64-linux-gnu/openmpi/include",
+      "-I/home/vipul/code/Custom-NCCL-Collectives/src/include",
+      "-fPIC",
+      "-c",
+      "-o",
+      "/home/vipul/code/Custom-NCCL-Collectives/build/collective_communication/ReduceScatter.o",
+      "ReduceScatter.cc"
+    ],
+    "directory": "/home/vipul/code/Custom-NCCL-Collectives/src/collective_communication/operations",
+    "file": "/home/vipul/code/Custom-NCCL-Collectives/src/collective_communication/operations/ReduceScatter.cc",
+    "output": "/home/vipul/code/Custom-NCCL-Collectives/build/collective_communication/ReduceScatter.o"
+  },
+  {
+    "arguments": [
+      "/usr/local/cuda/bin/nvcc",
+      "-c",
+      "-ccbin",
+      "g++",
+      "-std=c++11",
+      "-O3",
+      "-g",
+      "-I/usr/lib/x86_64-linux-gnu/openmpi/include",
+      "-I/home/vipul/code/Custom-NCCL-Collectives/src/include",
+      "-std=c++11",
+      "-O3",
+      "-g",
+      "-I/usr/local/cuda/include",
+      "-I/usr/lib/x86_64-linux-gnu/openmpi/include",
+      "-I/home/vipul/code/Custom-NCCL-Collectives/src/include",
+      "-o",
+      "/home/vipul/code/Custom-NCCL-Collectives/build/tests/SendRecv_test",
+      "SendRecv_test.cu"
+    ],
+    "directory": "/home/vipul/code/Custom-NCCL-Collectives/tests/unit_tests",
+    "file": "/home/vipul/code/Custom-NCCL-Collectives/tests/unit_tests/SendRecv_test.cu",
+    "output": "/home/vipul/code/Custom-NCCL-Collectives/build/tests/SendRecv_test"
+  }
+]

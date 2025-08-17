@@ -8,18 +8,18 @@ The code is for educational purposes and to demonstrate the multiple layers of a
 
 The project follows [2] in structuring the code, and the design of NCCL.
 
-## Build with Docker:
-Git setup:
-```
-gh auth login
-git config --global user.email "vipuls181999@gmail.com"
-git config --global user.name "Vipul Sharma"
-```
-
+## Run with Docker:
 Pull and run container:
 ```
 docker pull ghcr.io/vipulsharma18/nccl-from-first-principles:main
 docker run --gpus all -dit ghcr.io/vipulsharma18/nccl-from-first-principles:main
+```
+
+Git setup if needed within the container:
+```
+gh auth login
+git config --global user.email "vipuls181999@gmail.com"
+git config --global user.name "Vipul Sharma"
 ```
 
 ## Test Custom NCCL:
@@ -100,6 +100,14 @@ Figure 2 from [2]:
 
 **Phase 5: Simulating on-the-job debugging experience**
 - [ ] Breaking NCCLs: Exploration of different bugs (possibly another repo with this repo as a submodule).
+
+## Devtools:
+* For setting up clangd, use bear (`apt-get install bear`) like:
+```
+make clean; bear -- make all
+```
+This will generate a compile_commands.json file that can be used by clangd server after you
+restart it.
 
 ## (Deprecated) Benchmarking with NCCL_PERF:
 * We use https://github.com/NVIDIA/nccl-tests/tree/master to test our collectives for correctness. Since the code is primarily to simplify and understand NCCL, and not optimized like NCCL, there is very little expectation of performance matching NCCL.
