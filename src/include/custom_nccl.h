@@ -43,6 +43,8 @@ typedef enum { custom_ncclSuccess      =  0,
     custom_ncclNumResults              =  8 
 } custom_ncclResult_t;
 
+#define result_converter(ret) ((custom_ncclResult_t)((int)(ret)))
+
 /* Data types */ //TODO: extend this for fp4
 typedef enum {
     custom_ncclInt8       = 0, custom_ncclChar       = 0,

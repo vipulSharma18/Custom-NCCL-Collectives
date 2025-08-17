@@ -15,8 +15,6 @@ custom_ncclResult_t custom_ncclRecv(
 ){
     ncclDataType_t nccl_datatype = ncclDataType_t(int(datatype));
     ncclComm_t nccl_comm = comm;
-    custom_ncclResult_t res = CUSTOMNCCLCHECK(
-        ncclRecv(recvbuff, count, nccl_datatype, peer, nccl_comm, stream)
-    );
+    custom_ncclResult_t res = result_converter(ncclRecv(recvbuff, count, nccl_datatype, peer, nccl_comm, stream));
     return res;
 }
