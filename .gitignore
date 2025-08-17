@@ -12,3 +12,6 @@ ports.log
 
 # test output
 out.log
+
+# clangd
+.cache

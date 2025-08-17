@@ -107,7 +107,7 @@ Figure 2 from [2]:
 make clean; bear -- make all
 ```
 This will generate a compile_commands.json file that can be used by clangd server after you
-restart it.
+restart it (Ctrl+Shift+P, clangd:restart language server).
 
 ## (Deprecated) Benchmarking with NCCL_PERF:
 * We use https://github.com/NVIDIA/nccl-tests/tree/master to test our collectives for correctness. Since the code is primarily to simplify and understand NCCL, and not optimized like NCCL, there is very little expectation of performance matching NCCL.
