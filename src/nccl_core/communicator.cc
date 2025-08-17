@@ -1,10 +1,12 @@
 #include "nccl.h"
 #include "custom_nccl.h"
-
+#include <cstring>
 
 custom_ncclResult_t custom_ncclGetUniqueId(custom_ncclUniqueId* uniqueId){
-    ncclUniqueId* nccl_uniqueId = &ncclUniqueId(*uniqueId);
-    return ncclGetUniqueId(nccl_uniqueId);
+    ncclUniqueId nccl_uniqueId;
+    custom_ncclResult_t ret = custom_ncclResult_t(int(ncclGetUniqueId(&nccl_uniqueId)));
+    memcpy(uniqueId->internal, nccl_uniqueId.internal, CUSTOM_NCCL_UNIQUE_ID_BYTES);
+    return ret;
 }
 
 custom_ncclResult_t custom_ncclCommInitRank(
@@ -13,13 +15,14 @@ custom_ncclResult_t custom_ncclCommInitRank(
     custom_ncclUniqueId commId,
     int rank
 ){
-    ncclComm_t* nccl_comm = &ncclComm_t(*comm);
-    ncclUniqueId nccl_commId = ncclUniqueId(commId);
+    ncclComm_t *nccl_comm = comm;
+    ncclUniqueId nccl_commId;
+    memcpy(nccl_commId.internal, commId.internal, CUSTOM_NCCL_UNIQUE_ID_BYTES);
     return ncclCommInitRank(nccl_comm, nranks, nccl_commId, rank);
 }
 
 custom_ncclResult_t custom_ncclCommDestroy(custom_ncclComm_t comm){
-    ncclComm_t nccl_comm = ncclComm_t(comm);
+    ncclComm_t nccl_comm = comm;
     return ncclCommDestroy(nccl_comm);
 }
 
@@ -29,7 +32,6 @@ const char* custom_ncclGetErrorString(custom_ncclResult_t result){
 }
 
 const char* custom_ncclGetLastError(custom_ncclComm_t comm){
-    ncclComm_t nccl_comm = ncclComm_t(comm);
+    ncclComm_t nccl_comm = comm;
     return ncclGetLastError(nccl_comm);
 }
-

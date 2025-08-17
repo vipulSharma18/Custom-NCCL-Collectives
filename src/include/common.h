@@ -1,10 +1,7 @@
-// We heavily edit code from the common.h of nccl_perf repo from nvidia.
-// still the copyright is below if needed, with license: https://github.com/NVIDIA/nccl-tests/blob/master/LICENSE.txt 
-/*************************************************************************
-* Copyright (c) 2016-2022, NVIDIA CORPORATION. All rights reserved.
-*
-* See LICENSE.txt for license information
-************************************************************************/
+// This code is uses some functions defined in common.h from nccl_tests repo of nvidia.
+// Original license: https://github.com/NVIDIA/nccl-tests/blob/master/LICENSE.txt 
+// Original code: https://github.com/NVIDIA/nccl-tests/blob/master/src/common.h
+
 #ifndef __COMMON_H__
 #define __COMMON_H__
 

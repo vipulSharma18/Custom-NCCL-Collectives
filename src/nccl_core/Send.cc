@@ -14,7 +14,7 @@ custom_ncclResult_t custom_ncclSend(
     cudaStream_t stream
 ){
     ncclDataType_t nccl_datatype = ncclDataType_t(int(datatype));
-    ncclComm_t nccl_comm = ncclComm_t(comm);
+    ncclComm_t nccl_comm = comm;
     custom_ncclResult_t res = CUSTOMNCCLCHECK(
         ncclSend(sendbuff, count, nccl_datatype, peer, nccl_comm, stream)
     );

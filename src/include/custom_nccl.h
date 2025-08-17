@@ -1,14 +1,11 @@
-// Code is borrowed and edited from NVIDIA/NCCL repo, whose copyright is below.
-// license is in this repo: https://github.com/NVIDIA/nccl/blob/master/LICENSE.txt
-/*************************************************************************
-* Copyright (c) 2015-2021, NVIDIA CORPORATION. All rights reserved.
-*
-* See LICENSE.txt for license information
-************************************************************************/
+// Code is derived from NVIDIA/NCCL repo.
+// NVIDIA license is in this repo: https://github.com/NVIDIA/nccl/blob/master/LICENSE.txt
+// NVIDIA/NCCL's header code: https://github.com/NVIDIA/nccl/blob/master/src/nccl.h.in
 
 #ifndef CUSTOM_NCCL_H_
 #define CUSTOM_NCCL_H_
 
+#include "nccl.h"  // for custom_ncclComm typedef only.
 #include <cstddef>
 #include <cuda_runtime.h>
 #include <cuda_fp16.h>
@@ -31,7 +28,8 @@ extern "C" {
 
 #define CUSTOM_NCCL_UNIQUE_ID_BYTES 128
 typedef struct { char internal[CUSTOM_NCCL_UNIQUE_ID_BYTES]; } custom_ncclUniqueId;
-typedef struct custom_ncclComm* custom_ncclComm_t;
+typedef struct ncclComm custom_ncclComm;
+typedef custom_ncclComm* custom_ncclComm_t;
 
 /* Error type */
 typedef enum { custom_ncclSuccess      =  0,
