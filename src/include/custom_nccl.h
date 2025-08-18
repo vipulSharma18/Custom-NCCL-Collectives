@@ -62,6 +62,25 @@ typedef enum {
     custom_ncclNumTypes   = 12
 } custom_ncclDataType_t;
 
+/* Reduction operation selector */
+typedef enum { custom_ncclNumOps_dummy = 5 } custom_ncclRedOp_dummy_t;
+typedef enum { custom_ncclSum        = 0,
+               custom_ncclProd       = 1,
+               custom_ncclMax        = 2,
+               custom_ncclMin        = 3,
+               custom_ncclAvg        = 4,
+               /* ncclNumOps: The number of built-in ncclRedOp_t values. Also
+                * serves as the least possible value for dynamic ncclRedOp_t's
+                * as constructed by ncclRedOpCreate*** functions. */
+                custom_ncclNumOps     = 5,
+               /* ncclMaxRedOp: The largest valid value for ncclRedOp_t.
+                * It is defined to be the largest signed value (since compilers
+                * are permitted to use signed enums) that won't grow
+                * sizeof(ncclRedOp_t) when compared to previous NCCL versions to
+                * maintain ABI compatibility. */
+                custom_ncclMaxRedOp   = 0x7fffffff>>(32-8*sizeof(custom_ncclRedOp_dummy_t))
+             } custom_ncclRedOp_t;
+
 // nccl_core communicator
 custom_ncclResult_t custom_ncclGetUniqueId(custom_ncclUniqueId* uniqueId);
 custom_ncclResult_t custom_ncclCommInitRank(custom_ncclComm_t* comm, int nranks, custom_ncclUniqueId commId, int rank);
