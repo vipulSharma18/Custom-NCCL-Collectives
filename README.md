@@ -139,7 +139,7 @@ Flags:
 
 Reference: https://github.com/NVIDIA/nccl-tests/blob/master/README.md
 
-## References:
+## References (You can find notes and annotated papers in the research_notes folder):
 [1] S. Rennich, “CUDA C/C++ Streams and Concurrency”.    
 [2] Z. Hu et al., “Demystifying NCCL: An In-depth Analysis of GPU Communication Protocols and Algorithms,” July 07, 2025, arXiv: arXiv:2507.04786. doi: 10.48550/arXiv.2507.04786.    
 [3] M. Keiblinger, M. Sieg, J. M. Ong, S. Jaghouar, and J. Hagemann, “Prime Collective Communications Library -- Technical Report,” May 20, 2025, arXiv: arXiv:2505.14065. doi: 10.48550/arXiv.2505.14065.    
